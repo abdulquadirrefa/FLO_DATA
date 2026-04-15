@@ -29,7 +29,7 @@ const orderData = {
   skipDateSelection: false,
 
   // ── Run configuration ─────────────────────────────────────────
-  runCount: 3,              // ← change this to run more times
+  runCount: 1,              // ← change this to run more times
   delayBetweenRuns: 7000, // ← 10 seconds between runs (ms)
 };
 

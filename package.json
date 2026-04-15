@@ -3,7 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "smoke":        "npx playwright test --config=flo-smoke/playwright.config.js",
+    "smoke:headed": "npx playwright test --config=flo-smoke/playwright.config.js --headed",
+    "smoke:debug":  "npx playwright test --config=flo-smoke/playwright.config.js --debug",
+    "smoke:report":   "npx playwright show-report",
+    "master-po":         "npx playwright test smoke/master-po-flow.spec.js --config=flo-smoke/playwright.config.js",
+    "master-po:headed":  "npx playwright test smoke/master-po-flow.spec.js --config=flo-smoke/playwright.config.js --headed",
+    "master-po-reverse":        "npx playwright test smoke/master-po-reverse.spec.js --config=flo-smoke/playwright.config.js",
+    "master-po-reverse:headed": "npx playwright test smoke/master-po-reverse.spec.js --config=flo-smoke/playwright.config.js --headed"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -1,3 +1,5 @@
+const { buildLocators } = require('../locators/SchedulingReleaseLocators');
+
 class SchedulingReleasePage {
   constructor(page, env = 'UAT') {
     this.page = page;
@@ -7,44 +9,12 @@ class SchedulingReleasePage {
       ? page.locator('body')
       : page.frameLocator('iframe').first();
 
-    // Scheduling and Release SDK frame
     this.m3FormFrame = env === 'QA'
       ? page.frameLocator('iframe[src*="schedule-release-sdk"]')
       : page.frameLocator(`iframe[src*="${isoHost}"]`)
             .frameLocator('iframe[src*="schedule-release-sdk"]');
 
-    // ── Navigation ────────────────────────────────────────────────
-    this.startTab = this.m3Frame.locator('#startDiv').first();
-
-    this.schedulingReleaseBtn = env === 'QA'
-      ? this.m3Frame.locator('#MyCanvas span[tag="/mne/apps/schedule-release-sdk/"]').filter({ hasText: 'Scheduling and Release SDK' })
-      : this.m3Frame.locator('span[tag="/mne/apps/schedule-release-sdk/"]');
-
-    // ── Page ready indicator ──────────────────────────────────────
-    this.facilityLabel        = this.m3FormFrame.locator('label.mandatory').filter({ hasText: 'Facility' }).first();
-
-    // ── Search fields ─────────────────────────────────────────────
-    this.facilityInput        = this.m3FormFrame.locator('input[placeholder="--Select--"]').first();
-    this.facilityOption       = this.m3FormFrame.locator('[role="option"]').first();
-
-    this.styleInput           = this.m3FormFrame.locator('input[placeholder*="first six"]');
-    this.styleOption          = this.m3FormFrame.locator('[role="option"]').first();
-
-    this.coNumberInput        = this.m3FormFrame.locator('input[placeholder*="first eight"]');
-    this.coNumberOption       = this.m3FormFrame.locator('[role="option"]').first();
-
-    // ── Buttons ───────────────────────────────────────────────────
-    this.scheduleSearchBtn    = this.m3FormFrame.locator('button.k-button-icon.k-button[icon="search"]').first();
-    this.retrieveBtn          = this.m3FormFrame.locator('button:has-text("Retrieve")');
-    this.addScheduleBtn       = this.m3FormFrame.locator('button:has-text("Add Schedule")');
-    this.releaseScheduleBtn   = this.m3FormFrame.locator('button:has-text("Release Schedule")');
-
-    // ── Schedule dialog ───────────────────────────────────────────
-    this.scheduleDialogRow    = this.m3FormFrame.locator('td[role="gridcell"][aria-colindex="1"]').first();
-    this.scheduleDialogSelect = this.m3FormFrame.locator('button:has-text("Select")');
-
-    // ── Main table ────────────────────────────────────────────────
-    this.mainTableFirstRow    = this.m3FormFrame.locator('tr[data-kendo-grid-item-index="0"]');
+    Object.assign(this, buildLocators(this.m3Frame, this.m3FormFrame, env));
   }
 
   async clickStartTab() {
@@ -66,9 +36,8 @@ class SchedulingReleasePage {
     await this.facilityInput.click();
     await this.facilityInput.pressSequentially(value, { delay: 50 });
 
-    const option = this.m3FormFrame.locator('[role="option"]').first();
-    await option.waitFor({ state: 'visible', timeout: 10000 });
-    await option.click();
+    await this.facilityOption.waitFor({ state: 'visible', timeout: 10000 });
+    await this.facilityOption.click();
     console.log(`✅ Facility filled: ${value}`);
     await this.page.waitForTimeout(3000);
   }
@@ -76,11 +45,10 @@ class SchedulingReleasePage {
   async fillStyle(value) {
     await this.styleInput.waitFor({ state: 'visible', timeout: 15000 });
     await this.styleInput.click();
-    await this.styleInput.clear(); 
+    await this.styleInput.clear();
     await this.styleInput.pressSequentially(value, { delay: 50 });
 
-    const option = this.m3FormFrame.locator('[role="option"]')
-      .filter({ hasText: value }).first();
+    const option = this.gridOption.filter({ hasText: value }).first();
     await option.waitFor({ state: 'visible', timeout: 10000 });
     await option.click();
     console.log(`✅ Style filled: ${value}`);
@@ -94,8 +62,7 @@ class SchedulingReleasePage {
   }
 
   async hasTableData() {
-    const rowCount = await this.m3FormFrame
-      .locator('tr[data-kendo-grid-item-index]').count();
+    const rowCount = await this.tableRows.count();
     console.log(`>>> Table rows found: ${rowCount}`);
     return rowCount > 0;
   }
@@ -128,17 +95,14 @@ class SchedulingReleasePage {
   }
 
   async verifyAndClickReleaseSchedule() {
-    await this.m3FormFrame.locator('button:has-text("Release Schedule"):not([disabled])')
-      .waitFor({ state: 'visible', timeout: 15000 });
+    await this.releaseScheduleEnabled.waitFor({ state: 'visible', timeout: 15000 });
     console.log('✅ Release Schedule button is enabled');
 
     await this.releaseScheduleBtn.click();
     console.log('✅ Release Schedule clicked');
 
-    const confirmBtn = this.m3FormFrame
-      .locator('button:has-text("OK"), button:has-text("Ok"), button:has-text("Okay")').first();
-    await confirmBtn.waitFor({ state: 'visible', timeout: 10000 });
-    await confirmBtn.click();
+    await this.confirmBtn.waitFor({ state: 'visible', timeout: 10000 });
+    await this.confirmBtn.click();
     console.log('✅ Release Schedule confirmed');
     await this.page.waitForTimeout(5000);
   }
@@ -146,7 +110,6 @@ class SchedulingReleasePage {
   async handleSchedulingFlow(data) {
     this._coNumber = data.generatedCoNumber;
 
-    // ── Retry facility → style → CO number up to 3 times ──────────
     let coFilled = false;
     let attempts = 0;
 
@@ -154,12 +117,10 @@ class SchedulingReleasePage {
       if (attempts > 0) {
         console.log(`⚠️ CO Number option not found, clearing and retrying from Facility (${attempts}/5)...`);
 
-        // Clear facility to reset form state
         await this.facilityInput.waitFor({ state: 'visible', timeout: 15000 });
         await this.facilityInput.click({ clickCount: 3 });
         await this.facilityInput.fill('');
         await this.page.waitForTimeout(1000);
-
       }
 
       await this.fillFacility(data.schedulingFacility);
@@ -176,8 +137,7 @@ class SchedulingReleasePage {
         await this.coNumberInput.click();
         await this.coNumberInput.pressSequentially(data.generatedCoNumber, { delay: 50 });
 
-        const option = this.m3FormFrame.locator('[role="option"]')
-          .filter({ hasText: data.generatedCoNumber }).first();
+        const option = this.gridOption.filter({ hasText: data.generatedCoNumber }).first();
         await option.waitFor({ state: 'visible', timeout: 10000 });
         await option.click();
         console.log(`✅ CO Number filled: ${data.generatedCoNumber}`);
@@ -192,19 +152,16 @@ class SchedulingReleasePage {
       throw new Error(`❌ CO Number option for ${data.generatedCoNumber} not found after 3 attempts`);
     }
 
-    // ── First Retrieve ─────────────────────────────────────────────
     await this.clickRetrieve();
 
     const hasData = await this.hasTableData();
 
     if (hasData) {
       console.log('>>> Scenario 1: Table has data after first Retrieve');
-
       console.log('⏳ Waiting 15 seconds before Add Schedule...');
       await this.page.waitForTimeout(15000);
 
-      await this.m3FormFrame.locator('button:has-text("Add Schedule"):not([disabled])')
-        .waitFor({ state: 'visible', timeout: 15000 });
+      await this.addScheduleEnabled.waitFor({ state: 'visible', timeout: 15000 });
       await this.addScheduleBtn.click();
       console.log('✅ Add Schedule clicked');
 
@@ -212,12 +169,10 @@ class SchedulingReleasePage {
       await this.page.waitForTimeout(25000);
 
       await this.clickRetrieve();
-
     } else {
       console.log('>>> Scenario 2: No data after first Retrieve');
     }
 
-    // ── Both scenarios converge here ───────────────────────────────
     await this.selectScheduleFromDialog();
     await this.clickRetrieve();
 
