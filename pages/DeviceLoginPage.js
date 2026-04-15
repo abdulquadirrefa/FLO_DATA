@@ -1,9 +1,9 @@
+const { buildLocators } = require('../locators/DeviceLoginLocators');
+
 class DeviceLoginPage {
   constructor(page) {
-    this.page          = page;
-    this.usernameInput = page.locator('input[id="username"]');
-    this.passwordInput = page.locator('input[id="password"]');
-    this.signInBtn     = page.getByRole('button', { name: 'Sign In', exact: true });
+    this.page = page;
+    Object.assign(this, buildLocators(page));
   }
 
   /** @param {string} url */

@@ -147,7 +147,12 @@ test.describe('M3 Data Creation', () => {
     // ── Run N times ────────────────────────────────────────────────
     for (let run = 1; run <= orderData.runCount; run++) {
       await test.step(`Run ${run} - Full data creation flow`, async () => {
-        await runM3Flow(context, run, env);
+        try {
+          await runM3Flow(context, run, env);
+        } catch (err) {
+          console.error(`\n❌ Run ${run} failed: ${err.message}`);
+          addResult(run, 'FAILED', 'FAILED', orderData.m3Style);
+        }
       });
 
       // Wait between runs except after the last one

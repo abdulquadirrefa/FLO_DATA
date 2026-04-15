@@ -1,21 +1,9 @@
+const { buildLocators } = require('../locators/RapidLoginLocators');
+
 class RapidLoginPage {
   constructor(page) {
     this.page = page;
-
-    // Rapid login
-    this.brandixSignInBtn   = page.getByRole('button', { name: /brandix/i });
-
-    // Microsoft login
-    this.emailInput         = page.locator('input[type="email"]');
-    this.passwordInput      = page.locator('input[type="password"]');
-    this.nextBtn            = page.getByRole('button', { name: /next/i });
-    this.signInBtn          = page.getByRole('button', { name: /sign in/i });
-    this.staySignedInBtn    = page.getByRole('button', { name: /yes/i });
-
-    // M3 company selector
-    this.companyDropdown    = page.locator('[class*="company"], [class*="dropdown"]').first();
-    this.firstCompanyOption = page.locator('[role="option"], [class*="option"]').first();
-    this.confirmYesBtn      = page.getByRole('button', { name: /yes/i });
+    Object.assign(this, buildLocators(page));
   }
 
   async goto(url) {
@@ -38,36 +26,38 @@ class RapidLoginPage {
     await this.passwordInput.fill(password);
     await this.signInBtn.click();
 
-    // ── MFA check ─────────────────────────────────────────────────
+    // ── "Verify your identity" method selector (appears sometimes) ─
     try {
-      await this.page.waitForSelector(
-        '[data-viewid="PhoneAppOTP"], #idDiv_SAOTCAS_Section, [data-bind*="appName"]',
-        { timeout: 8000 }
-      );
+      await this.mfaAuthenticatorText.waitFor({ state: 'visible', timeout: 6000 });
+      await this.mfaAuthenticatorText.click();
+      console.log('🔐  Selected: Approve via Microsoft Authenticator');
+    } catch {
+      // Selector page did not appear — continue
+    }
 
+    // ── MFA check ─────────────────────────────────────────────────
+    // If still on Microsoft after 5s, MFA is required
+    const redirectedBeforeMFA = await this.page.waitForURL(
+      url => !url.toString().includes('login.microsoftonline.com'),
+      { timeout: 5000 }
+    ).then(() => true).catch(() => false);
+
+    if (!redirectedBeforeMFA) {
       // Try to extract the number shown on screen
-      const codeLocators = [
-        '[data-viewid="PhoneAppOTP"] .display-sign',
-        '#idDiv_SAOTCAS_Section .display-sign',
-        '.display-sign',
-      ];
-
       let mfaCode = '';
-      for (const selector of codeLocators) {
-        try {
-          mfaCode = await this.page.locator(selector).first().textContent({ timeout: 3000 });
-          if (mfaCode?.trim()) break;
-        } catch {
-          // try next selector
-        }
+      try {
+        const text = await this.mfaDisplaySign.textContent({ timeout: 3000 });
+        if (text?.trim()) mfaCode = text.trim();
+      } catch {
+        // code element not present
       }
 
       console.log('');
       console.log('🔐 ============================================');
       console.log('🔐  MFA REQUIRED');
       console.log('🔐  Open your Microsoft Authenticator app');
-      if (mfaCode?.trim()) {
-        console.log(`🔐  Tap the number: ${mfaCode.trim()}`);
+      if (mfaCode) {
+        console.log(`🔐  Tap the number: ${mfaCode}`);
       } else {
         console.log('🔐  Approve the sign-in request on your phone');
       }
@@ -75,49 +65,47 @@ class RapidLoginPage {
       console.log('🔐 ============================================');
       console.log('');
 
-      // Wait until MFA approved — Microsoft redirects away
-      await this.page.waitForURL(
-  url => !url.toString().includes('login.microsoftonline.com'),
-  { timeout: 90000 }
-);
+      // Wait for MFA approval — race between redirect and "Stay signed in?" heading
+      await Promise.race([
+        this.page.waitForURL(
+          url => !url.toString().includes('login.microsoftonline.com'),
+          { timeout: 90000 }
+        ).catch(() => {}),
+        this.staySignedInHeading
+          .waitFor({ state: 'visible', timeout: 90000 }).catch(() => {}),
+      ]);
 
       console.log('✅ MFA approved, continuing...');
-
-    } catch {
-      // No MFA prompt — UAT or cached session, continue normally
     }
 
     // ── Stay signed in prompt ──────────────────────────────────────
-    try {
-      await this.staySignedInBtn.waitFor({ state: 'visible', timeout: 30000 });
-      await this.staySignedInBtn.click();
-    } catch {
-      // Prompt didn't appear — continue
+    // Handle regardless of whether MFA was shown — prompt can appear any time
+    if (this.page.url().includes('login.microsoftonline.com')) {
+      try {
+        await this.staySignedInBtn.waitFor({ state: 'visible', timeout: 8000 });
+        await this.staySignedInBtn.click();
+        console.log('✅ Clicked "Yes" on Stay signed in prompt');
+      } catch {
+        // Prompt didn't appear — continue
+      }
     }
 
     // ── Gate: ensure we've fully left Microsoft before continuing ──
-   // ── Gate: ensure we've fully left Microsoft before continuing ──
-try {
-  await this.page.waitForURL(
-    url => !url.toString().includes('login.microsoftonline.com'),
-    { timeout: 30000 }
-  );
-} catch {
-  // Already redirected away from Microsoft — continue
-}
+    await this.page.waitForURL(
+      url => !url.toString().includes('login.microsoftonline.com'),
+      { timeout: 30000 }
+    ).catch(() => {});
   }
 
   async selectFirstCompany() {
-    const companyDropdown = this.page.locator('button.k-input-button[aria-label="Select"]');
-    await companyDropdown.waitFor({ state: 'visible', timeout: 30000 });
-    await companyDropdown.click();
+    await this.companySelectBtn.waitFor({ state: 'visible', timeout: 30000 });
+    await this.companySelectBtn.click();
 
-    const firstOption = this.page.locator('[role="option"]').first();
-    await firstOption.waitFor({ state: 'visible' });
-    await firstOption.click();
+    await this.companyOption.waitFor({ state: 'visible' });
+    await this.companyOption.click();
 
-    await this.page.getByRole('button', { name: /yes/i }).waitFor({ state: 'visible' });
-    await this.page.getByRole('button', { name: /yes/i }).click();
+    await this.confirmYesBtn.waitFor({ state: 'visible' });
+    await this.confirmYesBtn.click();
   }
 }
 
