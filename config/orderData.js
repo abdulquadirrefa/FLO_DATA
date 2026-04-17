@@ -1,4 +1,6 @@
 const orderData = {
+  env:             'QA',             // ← 'QA' or 'UAT'
+
   facility:        'BAL',
   buyerDivision:   'LPVCKNCBFMWOMEN',   //<------- Change
 //   m3Style:         'CKF7549S41',CK444ADF46, CKF7323F4Z
