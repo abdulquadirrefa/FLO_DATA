@@ -60,13 +60,14 @@ async function runM3Flow(context, runNumber, env) {
 
   // ── Customer Order Form ────────────────────────────────────────
   await custOrder.verifyPageLoaded();
+   if (!orderData.skipDateSelection) {
+    await custOrder.selectFutureDate();
+  }
   await custOrder.selectFacility(orderData.facility);
   await custOrder.selectStyle(orderData.buyerDivision, orderData.m3Style);
   await custOrder.fillFormFields(orderData);
 
-  if (!orderData.skipDateSelection) {
-    await custOrder.selectFutureDate();
-  }
+ 
 
   const coNumber = await custOrder.clickCreateAndGetCoNumber();
   console.log(`>>> Run ${runNumber} - CO Number: ${coNumber}`);

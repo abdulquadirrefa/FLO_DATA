@@ -10,7 +10,7 @@ module.exports = defineConfig({
 
   use: {
     baseURL: '',
-    headless: true,        
+    headless: false,        
     ignoreHTTPSErrors: true, 
     actionTimeout: 30000,     
     navigationTimeout: 60000,  
