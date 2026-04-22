@@ -145,7 +145,7 @@ class LineEntryPage {
     await this.confirmBtnAlt.click();
     console.log('✅ Release for Costing confirmed');
 
-    await this.page.waitForTimeout(15000);
+    await this.page.waitForTimeout(20000);
   }
 }
 
