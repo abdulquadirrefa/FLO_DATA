@@ -6,5 +6,12 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+# Nested test output (e.g. flo-smoke/flo-smoke/)
+**/test-results/
+**/report/
+**/blob-report/
 .env
 *.local
+
+# MCP config (local tooling, not project code)
+.mcp.json

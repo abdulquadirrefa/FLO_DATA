@@ -66,7 +66,7 @@ class CostingApprovalPage {
 
   async fillCoFilter(coNumber) {
     let attempts = 0;
-    while (attempts < 3) {
+    while (attempts < 10) {
       await this.coFilterInput.waitFor({ state: 'visible', timeout: 15000 });
       await this.coFilterInput.click();
       await this.coFilterInput.clear();
@@ -82,11 +82,11 @@ class CostingApprovalPage {
         return;
       } catch {
         attempts++;
-        console.log(`⚠️ CO Filter option not found, clicking Load again and retrying (${attempts}/3)...`);
+        console.log(`⚠️ CO Filter option not found, clicking Load again and retrying (${attempts}/10)...`);
 
         await this.loadBtn.click();
         await this.gridCell.first().waitFor({ state: 'visible', timeout: 30000 });
-        await this.page.waitForTimeout(2000);
+        await this.page.waitForTimeout(4000);
       }
     }
 

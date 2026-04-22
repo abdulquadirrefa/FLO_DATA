@@ -1,4 +1,6 @@
 const orderData = {
+  env:             'QA',             // ← 'QA' or 'UAT'
+
   facility:        'BAL',
   buyerDivision:   'LPVCKNCBFMWOMEN',   //<------- Change
 //   m3Style:         'CKF7549S41',CK444ADF46, CKF7323F4Z
@@ -29,7 +31,7 @@ const orderData = {
   skipDateSelection: false,
 
   // ── Run configuration ─────────────────────────────────────────
-  runCount: 1,              // ← change this to run more times
+  runCount: 5,              // ← change this to run more times
   delayBetweenRuns: 7000, // ← 10 seconds between runs (ms)
 };
 

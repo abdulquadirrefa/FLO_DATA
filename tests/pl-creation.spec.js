@@ -11,8 +11,11 @@ const { ConfirmGRNPage }            = require('../pages/ConfirmGRNPage');
 const { readPONumbers }             = require('../config/readPONumbers');
 const { addResult, printSummary, getCollectedData } = require('../config/resultsTrackerGRN');
 const { deviceData }                = require('../config/deviceData');
+const { orderData }                 = require('../config/orderData');
+const { URLS }                      = require('../config/urls');
 
-const APP_URL      = 'https://sfcs-grn-cloud.uat.brandixlk.org/raw-material/inventory/inventory-view';
+const env          = orderData.env;
+const APP_URL      = URLS[env].GRN;
 const GRN_USERNAME = process.env.GRN_USERNAME;
 const GRN_PASSWORD = process.env.GRN_PASSWORD;
 const DEV_USERNAME = process.env.DEVICE_USERNAME;

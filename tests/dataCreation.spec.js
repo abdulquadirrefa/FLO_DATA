@@ -9,16 +9,13 @@ const { CostingApprovalPage }   = require('../pages/CostingApprovalPage');
 const { SchedulingReleasePage } = require('../pages/SchedulingReleasePage');
 const { orderData }             = require('../config/orderData');
 const { addResult, printSummary } = require('../config/resultsTracker');
+const { URLS }                  = require('../config/urls');
 
-// const RAPID_URL = 'https://rapid.uat.brandixlk.org/security-ironhide-app/company';
-// const M3_URL    = 'https://sin1auwm3ui001.brandixlk.org/infor/a2cdf75a-1d96-43d0-95c5-25163fb8a228';
-
-const RAPID_URL = 'https://rapid.qa.brandixlk.org/security-ironhide-app/company';
-const M3_URL    =  'https://erp-qa-m3-iso-ec2.brandixlk.org:24012/mne/infor?HybridCertified=1&OnPremCertified=1&Responsive=All&xfo=https%3a%2f%2ferp-qa-m3-ui-ec2.brandixlk.org&LogicalId=lid%3A%2F%2Finfor.m3.qa&inforThemeName=Light&inforCurrentLocale=en-US&inforCurrentLanguage=en-US&infor10WorkspaceShell=1&inforWorkspaceVersion=2020-06&inforStyle=3.0&inforTimeZone=(UTC%2B05%3A30)%20Chennai%2C%20Kolkata%2C%20Mumbai%2C%20New%20Delhi&inforStdTimeZone=Asia%2FKolkata';
-
-const env      = M3_URL.includes('erp-qa') ? 'QA' : 'UAT';
-const EMAIL    = env === 'QA' ? process.env.QA_EMAIL    : process.env.UAT_EMAIL;
-const PASSWORD = env === 'QA' ? process.env.QA_PASSWORD : process.env.UAT_PASSWORD;
+const env       = orderData.env;            
+const RAPID_URL = URLS[env].RAPID;
+const M3_URL    = URLS[env].M3;
+const EMAIL     = env === 'QA' ? process.env.QA_EMAIL    : process.env.UAT_EMAIL;
+const PASSWORD  = env === 'QA' ? process.env.QA_PASSWORD : process.env.UAT_PASSWORD;
 
 // ── Single M3 run ─────────────────────────────────────────────────
 async function runM3Flow(context, runNumber, env) {
@@ -27,15 +24,14 @@ async function runM3Flow(context, runNumber, env) {
   console.log(`${'═'.repeat(50)}\n`);
 
   // Open a new M3 tab - SSO session already established from Rapid
- const m3Page          = await context.newPage();
-  //const env             = M3_URL.includes('erp-qa') ? 'QA' : 'UAT';
+  const m3Page          = await context.newPage();
   const m3Login         = new M3LoginPage(m3Page);
   const m3Nav           = new M3NavigationPage(m3Page, env);
   let custOrder         = new CustomerOrderPage(m3Page, env);
   let lineEntry         = new LineEntryPage(m3Page, env);
   const costingApproval = new CostingApprovalPage(m3Page, env);
   const scheduling      = new SchedulingReleasePage(m3Page, env);
-  // ── M3 Login ───────────────────────────────────────────────────
+  // ── M3 Login ──────────────────────────────────────────────────
   console.log('>>> Opening M3 tab...');
   await m3Login.goto(M3_URL);
   console.log('>>> M3 page loaded, attempting login...');
@@ -64,13 +60,14 @@ async function runM3Flow(context, runNumber, env) {
 
   // ── Customer Order Form ────────────────────────────────────────
   await custOrder.verifyPageLoaded();
+   if (!orderData.skipDateSelection) {
+    await custOrder.selectFutureDate();
+  }
   await custOrder.selectFacility(orderData.facility);
   await custOrder.selectStyle(orderData.buyerDivision, orderData.m3Style);
   await custOrder.fillFormFields(orderData);
 
-  if (!orderData.skipDateSelection) {
-    await custOrder.selectFutureDate();
-  }
+ 
 
   const coNumber = await custOrder.clickCreateAndGetCoNumber();
   console.log(`>>> Run ${runNumber} - CO Number: ${coNumber}`);

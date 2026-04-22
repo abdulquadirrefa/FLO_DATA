@@ -49,7 +49,7 @@ class CustomerOrderPage {
     await this.searchBtn.waitFor({ state: 'visible' });
     await this.searchBtn.click();
 
-    await this.firstDataRow.waitFor({ state: 'visible', timeout: 15000 });
+    await this.firstDataRow.waitFor({ state: 'visible', timeout: 30000 });
     await this.firstDataRow.click();
 
     await this.selectBtn.waitFor({ state: 'visible' });
@@ -63,22 +63,18 @@ class CustomerOrderPage {
 
     const calendar = this.m3FormFrame.locator('kendo-calendar').first();
     await calendar.waitFor({ state: 'visible', timeout: 10000 });
-    await this.page.waitForTimeout(500);
+    await this.page.waitForTimeout(300);
 
-    const dayCell = calendar.locator('tbody td:not(.k-other-month) .k-link')
-      .filter({ hasText: /^15$/ })
-      .first();
-
-    await dayCell.waitFor({ state: 'visible', timeout: 10000 });
-    await dayCell.click({ force: false, timeout: 5000 });
-
-    await calendar.waitFor({ state: 'hidden', timeout: 5000 }).catch(() => {
-      this.m3FormFrame.locator('#id_coNumber_header').click();
-    });
+    // Press ArrowDown 4 times (each moves 1 week forward = 28 days total),
+    // then Enter to select — works regardless of current date
+    for (let i = 0; i < 4; i++) {
+      await this.page.keyboard.press('ArrowDown');
+      await this.page.waitForTimeout(100);
+    }
+    await this.page.keyboard.press('Enter');
 
     const future = new Date();
-    future.setMonth(future.getMonth() + 1);
-    future.setDate(15);
+    future.setDate(future.getDate() + 28);
     console.log(`✅ Future date selected: ${future.toDateString()}`);
   }
 
