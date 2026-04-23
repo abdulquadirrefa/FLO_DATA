@@ -32,6 +32,14 @@ class ConfirmGRNPage {
     await this.headerCheckbox.waitFor({ state: 'visible', timeout: 15000 });
     await this.headerCheckbox.click();
     await this.page.waitForTimeout(1000);
+
+    const dialogVisible = await this.selectCurrentPageBtn.isVisible();
+    if (dialogVisible) {
+      await this.selectCurrentPageBtn.click();
+      await this.page.waitForTimeout(1000);
+      console.log('  → Dialog appeared — clicked "Select Current Page"');
+    }
+
     console.log('  → All rows selected via header checkbox');
   }
 
