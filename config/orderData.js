@@ -3,8 +3,8 @@ const orderData = {
 
   facility:        'BAL',
   buyerDivision:   'LPVCKNCBFMWOMEN',   //<------- Change
-//   m3Style:         'CKF7549S41',CK444ADF46, CKF7323F4Z
-  m3Style:         'CK444ADF46',    //<------- Change
+//   m3Style:         'CKF7549S41',CK444ADF46, CKF7323F4Z, CKF7323F4P,CKF7323F4Y
+  m3Style:         'CKF7323F4Y',    //<------- Change
   cpONumber:       'CPO_001_auto',
   vpoNumber:       'VPO_001_auto',
   leadFactory:     'B03',
@@ -14,15 +14,15 @@ const orderData = {
   buyerName:       'Auto_001',
 
   // Line Entry
-  zFeature:        'PV0000000000020',
+  zFeature:        'PV0000000000005',
   //zFeature:        'PV0000000000021',PV0000000000020, PV0000000000005
   dateCode:        '26/05/15',      
   destination:     'australia',
   salesChannel:    'D00',
-  otherZ:          'PV0000000000020',
+  otherZ:          'PV0000000000005',
   packMethod:      'c01',
 //   expectedColor:   '100 101 IVORY',601 GEQ SYRAH, 600 XAT ROUGE
-  expectedColor:   '600 XAT ROUGE',   //<------- Change
+  expectedColor:   '601 GEQ SYRAH',   //<------- Change
   sizeQty:         '100',
 
 
@@ -31,7 +31,7 @@ const orderData = {
   skipDateSelection: false,
 
   // ── Run configuration ─────────────────────────────────────────
-  runCount: 5,              // ← change this to run more times
+  runCount: 1,              // ← change this to run more times
   delayBetweenRuns: 7000, // ← 10 seconds between runs (ms)
 };
 

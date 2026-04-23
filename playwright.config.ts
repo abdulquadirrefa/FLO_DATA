@@ -12,7 +12,7 @@ module.exports = defineConfig({
     baseURL: '',
     headless: false,        
     ignoreHTTPSErrors: true, 
-    actionTimeout: 30000,     
+    actionTimeout: 60000,     
     navigationTimeout: 60000,  
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

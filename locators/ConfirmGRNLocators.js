@@ -5,6 +5,7 @@ function buildLocators(page) {
     poInput:              page.locator('#poNo, input[placeholder="Enter Valid PO number to create a PL"]').first(),
     nextBtn:              page.locator('button:has-text("Next")').first(),
     headerCheckbox:       page.locator('thead .ant-checkbox-input').first(),
+    selectCurrentPageBtn: page.locator('button:has-text("Select Current Page")').first(),
     updateM3Btn:          page.locator('button:has-text("Update M3")').first(),
     completedTab:         page.locator('label.ant-radio-button-wrapper:has-text("Completed")').first(),
     pendingTab:           page.locator('label.ant-radio-button-wrapper:has-text("Pending")').first(),
