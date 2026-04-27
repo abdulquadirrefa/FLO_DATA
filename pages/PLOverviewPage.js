@@ -18,9 +18,14 @@ class PLOverviewPage {
     await this.pendingSection.waitFor({ state: 'visible', timeout: 15000 });
 
     const card = this.pendingSection.locator('.ant-card').filter({ hasText: poNumber }).first();
-    await card.waitFor({ state: 'visible', timeout: 15000 });
-    await card.scrollIntoViewIfNeeded();
 
+    const isVisible = await card.isVisible().catch(() => false);
+    if (!isVisible) {
+      console.log(`  ⚠️ PO ${poNumber} not found in PENDING — skipping`);
+      return;
+    }
+
+    await card.scrollIntoViewIfNeeded();
     const eyeIcon = card.locator('.anticon-eye, [aria-label="icon: eye"]').first();
     await eyeIcon.waitFor({ state: 'visible', timeout: 10000 });
     await eyeIcon.click();

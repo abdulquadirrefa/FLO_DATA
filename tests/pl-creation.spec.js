@@ -123,8 +123,8 @@ async function runDeviceScanning(deviceContext, collectedData) {
   await deviceScan.enterStartBarcode(deviceData.startBarcode);
   await deviceScan.waitForEntryDropdown();
 
-  // Select all GRN entry numbers from the dropdown
-  const grnEntryNumbers = collectedData.map(d => d.grnEntryNumber);
+  // Select all GRN entry numbers from the dropdown (deduplicated — same GRN can cover multiple barcodes)
+  const grnEntryNumbers = [...new Set(collectedData.map(d => d.grnEntryNumber))];
   await deviceScan.selectAllGRNEntries(grnEntryNumbers);
 
   // Proceed
