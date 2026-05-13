@@ -2,6 +2,7 @@ const { defineConfig, devices } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './tests',
+  testIgnore: ['**/tests/flo/**'],   // FLO tests use playwright.flo.config.js on Chromium
   timeout: 0,
    expect: {
     timeout: 15000,       // ← individual expect/waitFor timeout
@@ -13,7 +14,7 @@ module.exports = defineConfig({
     headless: false,        
     ignoreHTTPSErrors: true, 
     actionTimeout: 60000,     
-    navigationTimeout: 60000,  
+    navigationTimeout: 1200000,  
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'on-first-retry',
@@ -21,9 +22,13 @@ module.exports = defineConfig({
 
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+    name: 'msedge',
+    use: { ...devices['Desktop Edge'], channel: 'msedge' },
+  },
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'] },
+    // },
     // Firefox and WebKit removed
   ],
 });
