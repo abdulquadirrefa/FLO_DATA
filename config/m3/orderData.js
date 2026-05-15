@@ -1,5 +1,5 @@
 const orderData = {
-  env:             'UAT',             // ← 'QA' or 'UAT'
+  env:             'QA',             // ← 'QA' or 'UAT'
 
   facility:        'BAL',
   buyerDivision:   'LPVCKNCBFMWOMEN',   //<------- Change

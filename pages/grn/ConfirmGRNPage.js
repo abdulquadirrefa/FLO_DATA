@@ -29,18 +29,37 @@ class ConfirmGRNPage {
   }
 
   async selectAllRowsViaHeaderCheckbox() {
-    await this.headerCheckbox.waitFor({ state: 'visible', timeout: 15000 });
-    await this.headerCheckbox.click();
-    await this.page.waitForTimeout(1000);
+    let pageNum = 1;
 
-    const dialogVisible = await this.selectCurrentPageBtn.isVisible();
-    if (dialogVisible) {
-      await this.selectCurrentPageBtn.click();
+    while (true) {
+      console.log(`  → Selecting rows on page ${pageNum}...`);
+
+      await this.headerCheckbox.waitFor({ state: 'visible', timeout: 15000 });
+      await this.headerCheckbox.click();
       await this.page.waitForTimeout(1000);
-      console.log('  → Dialog appeared — clicked "Select Current Page"');
+
+      const dialogVisible = await this.selectCurrentPageBtn.isVisible();
+      if (dialogVisible) {
+        await this.selectCurrentPageBtn.click();
+        await this.page.waitForTimeout(1000);
+        console.log(`  → Dialog appeared — clicked "Select Current Page" (page ${pageNum})`);
+      }
+
+      console.log(`  ✅ Page ${pageNum} rows selected`);
+
+      // Check if there is a next page available
+      const hasPagination = await this.pagination.isVisible();
+      if (!hasPagination) break;
+
+      const nextDisabled = await this.nextPageBtn.getAttribute('aria-disabled');
+      if (nextDisabled === 'true') break;
+
+      await this.nextPageBtn.click();
+      await this.page.waitForTimeout(2000);
+      pageNum++;
     }
 
-    console.log('  → All rows selected via header checkbox');
+    console.log(`  → All rows selected across ${pageNum} page(s)`);
   }
 
   async clickUpdateM3() {

@@ -11,6 +11,8 @@
     "session":           "npx playwright test tests/m3/session-setup.spec.js",
     "scan":              "npx playwright test tests/device-grn/scan-and-confirm.spec.js",
     "scan:headed":       "npx playwright test tests/device-grn/scan-and-confirm.spec.js --headed",
+    "grn":              "npx playwright test tests/m3/grn-scan.spec.js",
+    "grn:headed":       "npx playwright test tests/m3/grn-scan.spec.js --headed",
     "smoke":             "npx playwright test --config=playwright.flo.config.js",
     "smoke:headed":      "npx playwright test --config=playwright.flo.config.js --headed",
     "smoke:debug":       "npx playwright test --config=playwright.flo.config.js --debug",

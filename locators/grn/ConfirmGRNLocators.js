@@ -11,6 +11,8 @@ function buildLocators(page) {
     pendingTab:           page.locator('label.ant-radio-button-wrapper:has-text("Pending")').first(),
     tableRows:            page.locator('.ant-table-row.editable-row.ant-table-row-level-0'),
     goBackBtn:            page.locator('button:has-text("Go Back")').first(),
+    pagination:           page.locator('ul.ant-pagination.ant-table-pagination'),
+    nextPageBtn:          page.locator('li.ant-pagination-next'),
   };
 }
 
