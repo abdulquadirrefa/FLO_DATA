@@ -9,6 +9,8 @@ function buildLocators(page) {
     tableRow:          '.ant-table-row',                    // used with waitForSelector
     tableHeaders:      page.locator('th.ant-table-row-cell-break-word .ant-table-column-title'),
     tableRows:         page.locator('.ant-table-row.ant-table-row-level-0:not(.ant-table-fixed-row)'),
+    pagination:        page.locator('ul.ant-pagination.ant-table-pagination'),
+    nextPageBtn:       page.locator('li.ant-pagination-next'),
   };
 }
 

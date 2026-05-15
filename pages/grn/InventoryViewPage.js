@@ -30,6 +30,8 @@ class InventoryViewPage {
       console.log('  ✅ PO Number column already enabled');
     }
 
+    await this.page.evaluate(() => window.scrollTo(0, 0));
+    await this.page.waitForTimeout(300);
     await this.settingsIcon.click();
     await this.page.waitForTimeout(500);
   }
@@ -53,8 +55,8 @@ class InventoryViewPage {
   async collectRowData(poNumber) {
     const results = [];
 
+    // Resolve column indices once from the header row
     const headerCount = await this.tableHeaders.count();
-
     let grnColIndex     = -1;
     let barcodeColIndex = -1;
 
@@ -66,25 +68,46 @@ class InventoryViewPage {
 
     console.log(`  → GRN col index: ${grnColIndex}, Barcode col index: ${barcodeColIndex}`);
 
-    const rowCount = await this.tableRows.count();
-    console.log(`  → ${rowCount} row(s) found`);
+    let pageNum = 1;
 
-    for (let r = 0; r < rowCount; r++) {
-      const cells = this.tableRows.nth(r).locator('td.ant-table-row-cell-break-word');
-      const cellCount = await cells.count();
+    while (true) {
+      console.log(`  → Reading page ${pageNum}...`);
 
-      if (cellCount < grnColIndex + 1) {
-        console.log(`    ⚠️ Row ${r + 1} skipped — only ${cellCount} cells`);
-        continue;
+      const rowCount = await this.tableRows.count();
+      console.log(`     ${rowCount} row(s) on this page`);
+
+      for (let r = 0; r < rowCount; r++) {
+        const cells     = this.tableRows.nth(r).locator('td.ant-table-row-cell-break-word');
+        const cellCount = await cells.count();
+
+        if (cellCount < grnColIndex + 1) {
+          console.log(`    ⚠️ Row ${r + 1} skipped — only ${cellCount} cells`);
+          continue;
+        }
+
+        const grnValue     = grnColIndex >= 0     ? (await cells.nth(grnColIndex).innerText()).trim()     : '';
+        const barcodeValue = barcodeColIndex >= 0 ? (await cells.nth(barcodeColIndex).innerText()).trim() : '';
+
+        results.push({ poNumber, grnEntryNumber: grnValue, scanBarcode: barcodeValue });
+        console.log(`    📌 Row ${r + 1} — GRN: ${grnValue} | Barcode: ${barcodeValue}`);
       }
 
-      const grnValue     = grnColIndex >= 0     ? (await cells.nth(grnColIndex).innerText()).trim()     : '';
-      const barcodeValue = barcodeColIndex >= 0 ? (await cells.nth(barcodeColIndex).innerText()).trim() : '';
+      // Check if pagination exists and next page is available
+      const hasPagination = await this.pagination.isVisible();
+      if (!hasPagination) break;
 
-      results.push({ poNumber, grnEntryNumber: grnValue, scanBarcode: barcodeValue });
-      console.log(`    📌 Row ${r + 1} — GRN: ${grnValue} | Barcode: ${barcodeValue}`);
+      const nextDisabled = await this.nextPageBtn.getAttribute('aria-disabled');
+      if (nextDisabled === 'true') break;
+
+      // Navigate to next page and wait for table to re-render
+      await this.nextPageBtn.click();
+      await this.page.waitForTimeout(2000);
+      await this.page.waitForSelector(this.tableRow, { timeout: 15000 });
+
+      pageNum++;
     }
 
+    console.log(`  → Total rows collected for PO ${poNumber}: ${results.length}`);
     return results;
   }
 }
