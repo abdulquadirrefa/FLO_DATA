@@ -4,7 +4,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 const FLO_CONFIG = {
-  env:      'QA',    // ← change to 'UAT' to run against UAT
+  env:      'UAT',    // ← change to 'UAT' to run against UAT
 
   get baseURL() {
     return this.env === 'QA'

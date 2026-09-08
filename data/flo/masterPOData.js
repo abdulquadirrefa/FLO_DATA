@@ -6,8 +6,8 @@
 module.exports = {
 
   // ── Step 1: Master PO Selection search filters ────────────────────────────
-  style:    'CKF7323F4Y',
-  schedule: '20562',
+  style:    'CKF7323F4Z',
+  schedule: '35234',
 
   // ── Step 3: Job Preference ────────────────────────────────────────────────
   logicalBundleQty: '5',

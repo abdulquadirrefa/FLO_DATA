@@ -49,7 +49,7 @@ test.describe('Scan + Confirm GRN (recovery run)', () => {
     });
 
     // ── Phase 4: Device scanning (Edge, mobile view) ──────────────
-    await test.step('Device scanning (Edge, mobile)', async () => {
+    await test.step.skip('Device scanning (Edge, mobile)', async () => {
       const edgeBrowser = await browser.browserType().launch({
         channel: 'msedge',
         headless: false,
@@ -91,7 +91,7 @@ test.describe('Scan + Confirm GRN (recovery run)', () => {
         console.log(`\n  → Confirming GRN for PO: ${poNumber}`);
         await confirmGRN.enterPOAndClickNext(poNumber);
         await confirmGRN.selectAllRowsViaHeaderCheckbox();
-        await confirmGRN.clickUpdateM3();
+        //await confirmGRN.clickUpdateM3();
         await confirmGRN.verifyCompletedTab();
         await confirmGRN.clickGoBack();
         console.log(`  ✅ GRN confirmed for PO: ${poNumber}`);

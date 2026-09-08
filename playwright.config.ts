@@ -2,7 +2,7 @@ const { defineConfig, devices } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './tests',
-  testIgnore: ['**/tests/flo/**'],   // FLO tests use playwright.flo.config.js on Chromium
+  testIgnore: ['**/tests/flo/**', '**/tests/regression/**'],   // FLO tests use playwright.flo.config.js; regression suite uses playwright.regression.config.js
   timeout: 0,
    expect: {
     timeout: 15000,       // ← individual expect/waitFor timeout

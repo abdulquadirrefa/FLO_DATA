@@ -1,0 +1,106 @@
+- generic [ref=e2]:
+  - generic [ref=e11]: Loading...
+  - generic [ref=e12]:
+    - complementary [ref=e13]:
+      - generic [ref=e14]:
+        - img [ref=e16]
+        - menu [ref=e17]:
+          - 'menuitem "icon: info-circle Dashboards" [ref=e18]':
+            - generic [ref=e19] [cursor=pointer]:
+              - generic [ref=e20]:
+                - 'generic "icon: info-circle" [ref=e21]':
+                  - img [ref=e22]
+                - generic: Dashboards
+              - menu [ref=e25]:
+                - menuitem "IPS" [ref=e26]:
+                  - link "IPS" [ref=e27]:
+                    - /url: /dashboards/ips
+                - menuitem "WPT" [ref=e28]:
+                  - link "WPT" [ref=e29]:
+                    - /url: /dashboards/wpt
+                - menuitem "CTD(Warehouse)" [ref=e30]:
+                  - link "CTD(Warehouse)" [ref=e31]:
+                    - /url: /dashboards/ctd
+                - menuitem "CTD(Cutting)" [ref=e32]:
+                  - link "CTD(Cutting)" [ref=e33]:
+                    - /url: /dashboards/ctd-cutting
+                - menuitem "EMB Send Dashboard" [ref=e34]:
+                  - link "EMB Send Dashboard" [ref=e35]:
+                    - /url: /dashboards/emb-send
+                - menuitem "EMB Receive Dashboard" [ref=e36]:
+                  - link "EMB Receive Dashboard" [ref=e37]:
+                    - /url: /dashboards/emb-receive
+                - menuitem "TMS" [ref=e38]:
+                  - link "TMS" [ref=e39]:
+                    - /url: /dashboards/tms
+                - menuitem "IMS" [ref=e40]:
+                  - link "IMS" [ref=e41]:
+                    - /url: /dashboards/ims
+                - menuitem "Hourly Efficiency Report" [ref=e42]:
+                  - link "Hourly Efficiency Report" [ref=e43]:
+                    - /url: /pps/reports/sewingReport/hourlyEfficiencyReport
+          - 'menuitem "icon: info-circle User Management" [ref=e44]':
+            - generic [ref=e46] [cursor=pointer]:
+              - 'generic "icon: info-circle" [ref=e47]':
+                - img [ref=e48]
+              - generic: User Management
+          - 'menuitem "icon: info-circle MDM" [ref=e51]':
+            - generic [ref=e53] [cursor=pointer]:
+              - 'generic "icon: info-circle" [ref=e54]':
+                - img [ref=e55]
+              - generic: MDM
+          - 'menuitem "icon: info-circle PMS" [ref=e58]':
+            - generic [ref=e60] [cursor=pointer]:
+              - 'generic "icon: info-circle" [ref=e61]':
+                - img [ref=e62]
+              - generic: PMS
+          - 'menuitem "icon: info-circle SMS" [ref=e65]':
+            - generic [ref=e67] [cursor=pointer]:
+              - 'generic "icon: info-circle" [ref=e68]':
+                - img [ref=e69]
+              - generic: SMS
+          - 'menuitem "icon: info-circle PPS" [ref=e72]':
+            - generic [ref=e74] [cursor=pointer]:
+              - 'generic "icon: info-circle" [ref=e75]':
+                - img [ref=e76]
+              - generic: PPS
+          - 'menuitem "icon: info-circle PTS" [ref=e79]':
+            - generic [ref=e81] [cursor=pointer]:
+              - 'generic "icon: info-circle" [ref=e82]':
+                - img [ref=e83]
+              - generic: PTS
+          - 'menuitem "icon: info-circle WMS" [ref=e86]':
+            - generic [ref=e88] [cursor=pointer]:
+              - 'generic "icon: info-circle" [ref=e89]':
+                - img [ref=e90]
+              - generic: WMS
+          - 'menuitem "icon: info-circle Inspection" [ref=e93]':
+            - generic [ref=e95] [cursor=pointer]:
+              - 'generic "icon: info-circle" [ref=e96]':
+                - img [ref=e97]
+              - generic: Inspection
+          - 'menuitem "icon: info-circle Reports" [ref=e100]':
+            - generic [ref=e102] [cursor=pointer]:
+              - 'generic "icon: info-circle" [ref=e103]':
+                - img [ref=e104]
+              - generic: Reports
+        - generic [ref=e107]: 2.14.4 V
+    - generic [ref=e108]:
+      - generic [ref=e110]:
+        - generic [ref=e113]:
+          - generic [ref=e114]: "* Select Plant:"
+          - combobox [ref=e119] [cursor=pointer]:
+            - generic [ref=e121]: Please Select
+            - 'generic "icon: down" [ref=e123]':
+              - img [ref=e124]
+        - 'button "icon: user abdulq icon: down" [ref=e129] [cursor=pointer]':
+          - 'generic "icon: user"':
+            - img
+          - generic: abdulq
+          - 'generic "icon: down"':
+            - img
+      - main [ref=e130]:
+        - generic [ref=e133]:
+          - img [ref=e135]
+          - generic [ref=e191]: "403"
+          - generic [ref=e192]: Sorry, you are not authorized to access this page.

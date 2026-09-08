@@ -66,6 +66,8 @@ async function runM3Flow(context, runNumber, env) {
   await custOrder.selectFacility(orderData.facility);
   await custOrder.selectStyle(orderData.buyerDivision, orderData.m3Style);
   await custOrder.fillFormFields(orderData);
+  // adding due to qa slow
+  await m3Page.waitForTimeout(13000);
 
 
 
@@ -94,7 +96,7 @@ async function runM3Flow(context, runNumber, env) {
   await costingApproval.waitForLoadAndClick();
   await costingApproval.fillCoFilter(orderData.generatedCoNumber);
   await costingApproval.verifyCoNumberInTable(orderData.generatedCoNumber);
-  await costingApproval.selectFirstRowCheckbox();
+  await costingApproval.selectAllRowCheckboxes();
   await costingApproval.clickApprove();
   await m3Page.waitForTimeout(5000);
   

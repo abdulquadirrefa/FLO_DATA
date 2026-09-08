@@ -158,8 +158,8 @@ async function runConfirmGRN(page, poNumbers) {
     console.log(`\n  → Confirming GRN for PO: ${poNumber}`);
 
     await confirmGRN.enterPOAndClickNext(poNumber);
-    await confirmGRN.selectAllRowsViaHeaderCheckbox();
-    await confirmGRN.clickUpdateM3();
+    await confirmGRN.selectAndUpdateAllPages();
+    //await confirmGRN.clickUpdateM3();
     await confirmGRN.verifyCompletedTab();
     await confirmGRN.clickGoBack();
 

@@ -1,0 +1,57 @@
+{
+  "style": "CKF7323F4Z",
+  "schedule": "35234",
+
+  "logicalBundleQty": "5",
+  "maxPlies": "10",
+
+  "fabricRow1": {
+    "purchaseWidth": "1.00",
+    "fabricCategory": "FabTrim04",
+    "fabricType": "Single jersey",
+    "gsm": "1"
+  },
+  "fabricRow2": {
+    "purchaseWidth": "1.00",
+    "fabricCategorySearch": "mi",
+    "fabricCategory": "MidCup",
+    "fabricType": "RIB & Interlock",
+    "gsm": "1"
+  },
+
+  "sampleType": "Pink Tag",
+  "sampleQty": "1",
+  "processWastage": "1",
+
+  "ratios": [
+    {
+      "type": "NORMAL",
+      "description": "test",
+      "sizes": ["10", "10", "10", "10", "10"],
+      "plies": "10",
+      "totalSets": "100"
+    },
+    {
+      "type": "NORMAL",
+      "description": "test",
+      "sizes": ["50", "50", "50", "50", "50"],
+      "plies": "10"
+    }
+  ],
+
+  "markerVersions": [
+    { "version": "1", "markerType": "AvoidMarker", "shrinkage": "1", "width": "1", "length": "1",  "perimeter": "1" },
+    { "version": "2", "markerType": "AvoidMarker", "shrinkage": "1", "width": "1", "length": "11", "perimeter": "1" }
+  ],
+
+  "packingMethod": {
+    "name": "Test Pack",
+    "description": "test",
+    "minQty": "10",
+    "maxQty": "50",
+    "sizeQty": "5"
+  },
+
+  "docketRows": ["FWFT00023", "FWFT00048"],
+  "sewingJobQty": "10"
+}

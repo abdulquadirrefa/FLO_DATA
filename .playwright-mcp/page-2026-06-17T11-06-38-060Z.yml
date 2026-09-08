@@ -1,0 +1,26 @@
+- generic [ref=e2]:
+  - generic [ref=e11]: Loading...
+  - heading "Create RM Request - Sewing Trims" [level=4] [ref=e14]
+  - generic [ref=e16]:
+    - generic [ref=e17]:
+      - strong [ref=e20]: "Department:"
+      - strong [ref=e23]: "Workstation:"
+    - generic [ref=e24]:
+      - strong [ref=e27]: "Style:"
+      - strong [ref=e30]: "Customer Order:"
+      - strong [ref=e33]: "Schedule:"
+      - strong [ref=e36]: "Colour:"
+      - strong [ref=e39]: "Sewing Job Number:"
+    - generic [ref=e44]:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - table:
+                  - rowgroup
+              - generic:
+                - generic:
+                  - generic:
+                    - img
+                  - paragraph: No Data

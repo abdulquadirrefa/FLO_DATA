@@ -1,14 +1,16 @@
 // ═════════════════════════════════════════════════════════════════════════════
-//  Master PO Planning – Full Flow
-//  Edit data/flo/masterPOData.js to change style / schedule / quantities.
+//  Regression – Master PO Planning – Full Flow
+//  Adapted from tests/flo/master-po-flow.spec.js for the regression suite:
+//    • Session comes from the "setup" project's stored storage state
+//      (see auth.setup.js / playwright.regression.config.js) — no login step.
+//    • Test data lives in data/regression/master-po-flow.data.json.
 //
-//  Run: npx playwright test tests/flo/master-po-flow.spec.js --config=playwright.flo.config.js --headed
-//  Or:  npm run smoke:headed (runs both spec files; use --grep to target this one)
+//  Run: npm run regression:headed
 // ═════════════════════════════════════════════════════════════════════════════
 
 const { test, expect } = require('@playwright/test');
-const { FLO_CONFIG } = require('../../config/flo/credentials');
-const data           = require('../../data/flo/masterPOData');
+const { FLO_CONFIG }   = require('../../config/flo/credentials');
+const data             = require('../../data/regression/master-po-flow.data.json');
 
 // ── Screenshot helper – attaches to the Playwright HTML report ────────────────
 async function failStep(page, stepName, err) {
@@ -22,31 +24,20 @@ async function failStep(page, stepName, err) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-test.setTimeout(300_000); // 5 min – the full flow takes time
+test.setTimeout(1_200_000);
 
 test('Master PO Planning – Full Flow', async ({ page }) => {
-    test.setTimeout(1_200_000);
+
   // ══════════════════════════════════════════════════════════════════════════
-  //  LOGIN
+  //  OPEN FLO (already authenticated via stored session)
   // ══════════════════════════════════════════════════════════════════════════
-  await test.step('Login', async () => {
+  await test.step('Open FLO', async () => {
     try {
-      console.log('\n[Login] Navigating to FLO…');
+      console.log('\n[Open] Navigating to FLO…');
       await page.goto(FLO_CONFIG.baseURL, { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('networkidle', { timeout: 30000 });
-
-      console.log('[Login] Filling credentials on Keycloak…');
-      await page.getByRole('textbox', { name: 'Username or email' }).fill(FLO_CONFIG.email);
-      await page.getByRole('textbox', { name: 'Password' }).fill(FLO_CONFIG.password);
-      await page.getByRole('button', { name: 'Sign In' }).click();
-
-      // Wait for redirect back to FLO
-      const expectedHost = new URL(FLO_CONFIG.baseURL).hostname;
-      await page.waitForURL((url) => url.hostname === expectedHost, { timeout: 60000 });
-
-      await page.waitForLoadState('networkidle', { timeout: 30000 });
-      console.log(`[Login] Logged in – URL: ${page.url()}`);
-    } catch (err) { await failStep(page, 'Login', err); }
+      console.log(`[Open] FLO ready – URL: ${page.url()}`);
+    } catch (err) { await failStep(page, 'Open FLO', err); }
   });
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -69,19 +60,16 @@ test('Master PO Planning – Full Flow', async ({ page }) => {
     try {
       console.log(`\n[Step1] Searching for Style: ${data.style}, Schedule: ${data.schedule}`);
 
-      // Style dropdown
       await page.getByText('Select Style').nth(1).click();
       await page.getByRole('combobox').filter({ hasText: 'Select Style' })
-        .getByRole('textbox').fill(data.style.slice(-3)); // search by last 3 chars
+        .getByRole('textbox').fill(data.style.slice(-3));
       await page.getByRole('option', { name: data.style }).click();
 
-      // Schedule dropdown
       await page.getByText('Select Schedule').nth(1).click();
       await page.getByRole('combobox').filter({ hasText: 'Select Schedule' })
         .getByRole('textbox').fill(data.schedule);
-      await page.getByRole('option').first().click(); // pick first matching option
+      await page.getByRole('option').first().click();
 
-      // Click outside to close dropdown, then Search
       await page.keyboard.press('Escape');
       await page.getByRole('button', { name: 'Search' }).click();
       await page.waitForLoadState('networkidle', { timeout: 30000 });
@@ -102,26 +90,20 @@ test('Master PO Planning – Full Flow', async ({ page }) => {
       await page.getByRole('button', { name: 'Job Preference' }).click();
       await page.waitForLoadState('networkidle', { timeout: 30000 });
 
-      // Bundle type
       await page.getByText('Please SelectPlan Bundles').click();
       await page.getByRole('option', { name: 'Plan Bundles' }).click();
 
-      // Component base
       await page.getByRole('combobox').nth(2).click();
       await page.getByRole('option', { name: 'Component Group' }).click();
 
-      // Sewing job type
       await page.getByRole('combobox').nth(3).click();
       await page.getByRole('option', { name: 'Cut Based Sewing Job' }).click();
 
-      // Sewing job feature
       await page.locator('#sewingJobFeature .ant-select-arrow').click();
       await page.getByRole('option', { name: 'PO/Schedule' }).last().click();
 
-      // Logical bundle quantity
       await page.getByRole('spinbutton', { name: '* Logical Bundle Quantity:' }).fill(data.logicalBundleQty);
 
-      // Packing list features – .last() targets the most recently opened antd dropdown
       await page.locator('#packingListFeatures .ant-select-arrow').click();
       await page.getByRole('option', { name: 'PO/Schedule' }).last().click();
 
@@ -129,7 +111,6 @@ test('Master PO Planning – Full Flow', async ({ page }) => {
       await page.getByRole('button', { name: 'Save' }).click();
       await page.waitForLoadState('networkidle', { timeout: 30000 });
 
-      // Max Plies (appears after Save)
       console.log(`[Step3] Setting Max Plies to ${data.maxPlies}…`);
       await page.getByRole('textbox', { name: '* Max Plies:' }).waitFor({ state: 'visible', timeout: 15000 });
       await page.getByRole('textbox', { name: '* Max Plies:' }).fill(data.maxPlies);
@@ -148,7 +129,6 @@ test('Master PO Planning – Full Flow', async ({ page }) => {
 
       const drawer = page.locator('.ant-drawer-wrapper-body');
 
-      // ── Row 1 ───────────────────────────────────────────────────────────
       console.log('[Step4] Editing fabric row 1…');
       await page.getByRole('button', { name: 'icon: edit' }).first().click();
       const pwInput1 = drawer.getByRole('textbox', { name: '* Purchase Width:' });
@@ -169,7 +149,6 @@ test('Master PO Planning – Full Flow', async ({ page }) => {
       await drawer.waitFor({ state: 'hidden', timeout: 15000 });
       console.log('[Step4] Row 1 updated.');
 
-      // ── Row 2 ───────────────────────────────────────────────────────────
       console.log('[Step4] Editing fabric row 2…');
       await page.getByRole('button', { name: 'icon: edit' }).nth(1).click();
       const pwInput2 = drawer.getByRole('textbox', { name: '* Purchase Width:' });
@@ -203,25 +182,21 @@ test('Master PO Planning – Full Flow', async ({ page }) => {
   await test.step('Step 5 – Component Group Assignment', async () => {
     try {
       console.log('\n[Step5] Navigating to Component Group Assignment…');
-    await page.getByRole('button', { name: 'icon: right' }).click();
-await page.waitForLoadState('networkidle', { timeout: 30000 });
+      await page.getByRole('button', { name: 'icon: right' }).click();
+      await page.waitForLoadState('networkidle', { timeout: 30000 });
 
-// Wait for Ant Design spinner to clear before counting
-await page.locator('.ant-spin-spinning').waitFor({ state: 'hidden', timeout: 15000 }).catch(() => {});
+      await page.locator('.ant-spin-spinning').waitFor({ state: 'hidden', timeout: 15000 }).catch(() => {});
 
-// Target the component table specifically (only one with "Is Main Component" header)
-const componentTable = page.getByRole('table').filter({
-  has: page.getByRole('columnheader', { name: 'Is Main Component' })
-});
-const dataRows = componentTable.locator('tbody tr');
+      const componentTable = page.getByRole('table').filter({
+        has: page.getByRole('columnheader', { name: 'Is Main Component' })
+      });
+      const dataRows = componentTable.locator('tbody tr');
 
-// Wait for at least one row to render
-await dataRows.first().waitFor({ state: 'visible', timeout: 15000 });
-const rowCount = await dataRows.count();
-console.log(`[Step5] Found ${rowCount} component rows.`);
+      await dataRows.first().waitFor({ state: 'visible', timeout: 15000 });
+      const rowCount = await dataRows.count();
+      console.log(`[Step5] Found ${rowCount} component rows.`);
 
       if (rowCount === 4) {
-        // 4-row flow: row 1 needs the Is Main Component switch toggled first
         await dataRows.nth(0).getByRole('switch').click();
         await dataRows.nth(0).getByRole('combobox').click();
         await page.getByRole('option', { name: 'CG1' }).last().click();
@@ -236,7 +211,6 @@ console.log(`[Step5] Found ${rowCount} component rows.`);
         await page.getByRole('option', { name: 'CG2' }).last().click();
 
       } else if (rowCount === 3) {
-        // 3-row flow: rows 1 & 2 → CG1, row 3 → CG2
         await dataRows.nth(0).getByRole('switch').click();
         await dataRows.nth(0).getByRole('combobox').click();
         await page.getByRole('option', { name: 'CG1' }).last().click();
@@ -339,10 +313,10 @@ console.log(`[Step5] Found ${rowCount} component rows.`);
 
         await page.getByRole('textbox', { name: '* Description:' }).fill(ratio.description);
 
-        await page.getByRole('spinbutton').nth(2).fill(ratio.sizes[0]); // XS
-        await page.getByRole('spinbutton').nth(3).fill(ratio.sizes[1]); // S
-        await page.getByRole('spinbutton').nth(4).fill(ratio.sizes[2]); // M
-        await page.getByRole('spinbutton').nth(5).fill(ratio.sizes[3]); // L
+        await page.getByRole('spinbutton').nth(2).fill(ratio.sizes[0]);
+        await page.getByRole('spinbutton').nth(3).fill(ratio.sizes[1]);
+        await page.getByRole('spinbutton').nth(4).fill(ratio.sizes[2]);
+        await page.getByRole('spinbutton').nth(5).fill(ratio.sizes[3]);
         await page.getByRole('spinbutton').nth(6).fill(ratio.sizes[4]);
 
         await page.getByRole('spinbutton', { name: '* Ratio plies:' }).fill(ratio.plies);
@@ -473,36 +447,36 @@ console.log(`[Step5] Found ${rowCount} component rows.`);
       console.log('\n[Step13] Generating Dockets…');
 
       async function pollUntilDeleteDocket(rmSku, rowLabel) {
-      const deadline = Date.now() + 600_000; // ← 10 minutes
-      let attempt = 0;
+        const deadline = Date.now() + 600_000; // 10 minutes
+        let attempt = 0;
 
-      while (Date.now() < deadline) {
-        attempt++;
-        console.log(`[Step13] ${rowLabel} – poll attempt #${attempt}…`);
+        while (Date.now() < deadline) {
+          attempt++;
+          console.log(`[Step13] ${rowLabel} – poll attempt #${attempt}…`);
 
-        await page.waitForTimeout(20_000); 
+          await page.waitForTimeout(20_000);
 
-        try {
-          await page.locator('.anticon-reload').click();
-          await page.waitForLoadState('networkidle', { timeout: 20_000 }); 
-        } catch {
-          console.log(`[Step13] ${rowLabel} – reload/networkidle timed out, continuing anyway…`);
+          try {
+            await page.locator('.anticon-reload').click();
+            await page.waitForLoadState('networkidle', { timeout: 20_000 });
+          } catch {
+            console.log(`[Step13] ${rowLabel} – reload/networkidle timed out, continuing anyway…`);
+          }
+
+          const row = page.getByRole('row', { name: new RegExp(rmSku) }).first();
+          const deleteBtn = row.getByRole('button', { name: /delete docket/i });
+
+          if (await deleteBtn.isVisible()) {
+            console.log(`[Step13] ✓ ${rowLabel} – "Delete Docket" confirmed.`);
+            return;
+          }
+
+          const remaining = Math.round((deadline - Date.now()) / 1000);
+          console.log(`[Step13] ${rowLabel} still processing… (${remaining}s remaining)`);
         }
 
-        const row = page.getByRole('row', { name: new RegExp(rmSku) }).first();
-        const deleteBtn = row.getByRole('button', { name: /delete docket/i });
-
-        if (await deleteBtn.isVisible()) {
-          console.log(`[Step13] ✓ ${rowLabel} – "Delete Docket" confirmed.`);
-          return;
-        }
-
-        const remaining = Math.round((deadline - Date.now()) / 1000);
-        console.log(`[Step13] ${rowLabel} still processing… (${remaining}s remaining)`);
-  }
-
-  throw new Error(`${rowLabel}: "Delete Docket" not visible after 10 minutes`);
-}
+        throw new Error(`${rowLabel}: "Delete Docket" not visible after 10 minutes`);
+      }
 
       console.log('[Step13] Waiting for both Generate Docket buttons to be ready…');
       await expect(page.getByRole('button', { name: 'Generate Docket', exact: true }))
@@ -513,22 +487,21 @@ console.log(`[Step5] Found ${rowCount} component rows.`);
         .toBeEnabled({ timeout: 15000 });
       console.log('[Step13] Both Generate Docket buttons are visible and enabled.');
 
-      console.log('[Step13] Clicking Generate Docket for row 1 (FWFT00023)…');
-      const row1 = page.getByRole('row', { name: /FWFT00023/ }).first();
+      const [rmSku1, rmSku2] = data.docketRows;
+
+      console.log(`[Step13] Clicking Generate Docket for row 1 (${rmSku1})…`);
+      const row1 = page.getByRole('row', { name: new RegExp(rmSku1) }).first();
       await row1.getByRole('button', { name: 'Generate Docket', exact: true }).click();
-      console.log('[Step13] Row 1 clicked – polling for Delete Docket…');
-      //await pollUntilDeleteDocket('FWFT00023', 'Row 1 (FWFT00023)');
+      console.log('[Step13] Row 1 clicked.');
 
-      console.log('[Step13] Clicking Generate Docket for row 2 (FWFT00048)…');
-      const row2 = page.getByRole('row', { name: /FWFT00048/ }).first();
+      console.log(`[Step13] Clicking Generate Docket for row 2 (${rmSku2})…`);
+      const row2 = page.getByRole('row', { name: new RegExp(rmSku2) }).first();
       await row2.getByRole('button', { name: 'Generate Docket', exact: true }).click();
-      console.log('[Step13] Row 2 clicked – polling for Delete Docket…');
-      //await pollUntilDeleteDocket('FWFT00048', 'Row 2 (FWFT00048)');
+      console.log('[Step13] Row 2 clicked – polling for Delete Docket on both rows…');
 
-       console.log('[Step13] Polling both rows simultaneously…');
       await Promise.all([
-        pollUntilDeleteDocket('FWFT00023', 'Row 1 (FWFT00023)'),
-        pollUntilDeleteDocket('FWFT00048', 'Row 2 (FWFT00048)'),
+        pollUntilDeleteDocket(rmSku1, `Row 1 (${rmSku1})`),
+        pollUntilDeleteDocket(rmSku2, `Row 2 (${rmSku2})`),
       ]);
 
       console.log('[Step13] ✓ All dockets generated.');
@@ -661,6 +634,6 @@ console.log(`[Step5] Found ${rowCount} component rows.`);
   });
 
   console.log('\n' + '═'.repeat(60));
-  console.log('  MASTER PO FLOW COMPLETE ✓');
+  console.log('  REGRESSION – MASTER PO FLOW COMPLETE ✓');
   console.log('═'.repeat(60) + '\n');
 });

@@ -94,8 +94,7 @@ async function runConfirmGRN(page, poNumbers) {
     console.log(`\n  → Confirming GRN for PO: ${poNumber}`);
 
     await confirmGRN.enterPOAndClickNext(poNumber);
-    await confirmGRN.selectAllRowsViaHeaderCheckbox();
-    await confirmGRN.clickUpdateM3();
+    await confirmGRN.selectAndUpdateAllPages();
     await confirmGRN.verifyCompletedTab();
     await confirmGRN.clickGoBack();
 
@@ -163,7 +162,7 @@ test.describe('GRN Scan Flow', () => {
       await edgeBrowser.close();
     });
 
-    // ── Phase 5: Confirm GRN (back to Chrome) ────────────────────
+   // ── Phase 5: Confirm GRN (back to Chrome) ────────────────────
     await test.step('Confirm GRN for all POs', async () => {
       await page.bringToFront();
       await runConfirmGRN(page, poNumbers);

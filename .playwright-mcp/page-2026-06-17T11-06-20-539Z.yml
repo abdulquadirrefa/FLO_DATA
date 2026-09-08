@@ -1,0 +1,13 @@
+- generic [ref=e2]:
+  - generic [ref=e4]: admin
+  - generic [ref=e5]:
+    - banner [ref=e6]:
+      - heading "Sign in to your account" [level=1] [ref=e7]
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]: Username or email
+        - textbox "Username or email" [active] [ref=e15]
+      - generic [ref=e16]:
+        - generic [ref=e17]: Password
+        - textbox "Password" [ref=e18]
+      - button "Sign In" [ref=e20] [cursor=pointer]

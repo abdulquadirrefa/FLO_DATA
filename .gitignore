@@ -15,3 +15,6 @@ node_modules/
 
 # MCP config (local tooling, not project code)
 .mcp.json
+
+# Local test-run config (changes per run/session, not shared project code)
+config/m3/orderData.js

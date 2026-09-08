@@ -1,0 +1,20 @@
+[   13792ms] [ERROR] Mixed Content: The page at 'https://flo.uat.brandixlk.org/dashboards/tms' was loaded over HTTPS, but requested an insecure stylesheet 'http://sfcs-phpapp-cloud.uat.brandixlk.org/sfcs/styles/sfcs_styles.css'. This request has been blocked; the content must be served over HTTPS. @ https://sfcs-phpapp-cloud.uat.brandixlk.org/index-no-navi.php?r=L3NmY3NfYXBwL2FwcC9kYXNoYm9hcmRzL2NvbnRyb2xsZXJzL3Rtcy90bXNfZGFzaGJvYXJkX2lucHV0LnBocA==:78
+[   14248ms] missing ) after argument list
+[   14266ms] Error: [$injector:modulerr] http://errors.angularjs.org/1.4.8/$injector/modulerr?p0=App&p1=Error%3A%20%5B%24injector%3Anomod%5D%20http%3A%2F%2Ferrors.angularjs.org%2F1.4.8%2F%24injector%2Fnomod%3Fp0%3DApp%0A%20%20%20%20at%20https%3A%2F%2Fsfcs-phpapp-cloud.uat.brandixlk.org%2Fassets%2Fjs%2Fangular.min.js%3A6%3A416%0A%20%20%20%20at%20https%3A%2F%2Fsfcs-phpapp-cloud.uat.brandixlk.org%2Fassets%2Fjs%2Fangular.min.js%3A24%3A186%0A%20%20%20%20at%20b%20(https%3A%2F%2Fsfcs-phpapp-cloud.uat.brandixlk.org%2Fassets%2Fjs%2Fangular.min.js%3A23%3A251)%0A%20%20%20%20at%20https%3A%2F%2Fsfcs-phpapp-cloud.uat.brandixlk.org%2Fassets%2Fjs%2Fangular.min.js%3A23%3A494%0A%20%20%20%20at%20https%3A%2F%2Fsfcs-phpapp-cloud.uat.brandixlk.org%2Fassets%2Fjs%2Fangular.min.js%3A38%3A117%0A%20%20%20%20at%20n%20(https%3A%2F%2Fsfcs-phpapp-cloud.uat.brandixlk.org%2Fassets%2Fjs%2Fangular.min.js%3A7%3A333)%0A%20%20%20%20at%20g%20(https%3A%2F%2Fsfcs-phpapp-cloud.uat.brandixlk.org%2Fassets%2Fjs%2Fangular.min.js%3A37%3A488)%0A%20%20%20%20at%20eb%20(https%3A%2F%2Fsfcs-phpapp-cloud.uat.brandixlk.org%2Fassets%2Fjs%2Fangular.min.js%3A41%3A249)%0A%20%20%20%20at%20c%20(https%3A%2F%2Fsfcs-phpapp-cloud.uat.brandixlk.org%2Fassets%2Fjs%2Fangular.min.js%3A19%3A463)%0A%20%20%20%20at%20yc%20(https%3A%2F%2Fsfcs-phpapp-cloud.uat.brandixlk.org%2Fassets%2Fjs%2Fangular.min.js%3A20%3A274)
+    at https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/angular.min.js:6:416
+    at https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/angular.min.js:38:391
+    at n (https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/angular.min.js:7:333)
+    at g (https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/angular.min.js:37:488)
+    at eb (https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/angular.min.js:41:249)
+    at c (https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/angular.min.js:19:463)
+    at yc (https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/angular.min.js:20:274)
+    at Zd (https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/angular.min.js:19:83)
+    at https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/angular.min.js:294:192
+    at HTMLDocument.b (https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/angular.min.js:175:62)
+[   14339ms] [LOG] init_ColorPicker @ https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/custom.min.js:0
+[   14358ms] [LOG] run_charts  typeof [undefined] @ https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/custom.min.js:0
+[   14359ms] [LOG] run_datatables @ https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/custom.min.js:1
+[   14359ms] [LOG] init_DataTables @ https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/custom.min.js:1
+[   14360ms] [LOG] init_compose @ https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/custom.min.js:1
+[   14361ms] [LOG] run_customtabs @ https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/custom.min.js:0
+[   14361ms] [LOG] init_autocomplete @ https://sfcs-phpapp-cloud.uat.brandixlk.org/assets/js/custom.min.js:0

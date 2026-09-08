@@ -29,7 +29,7 @@ function buildLocators(m3Frame, m3FormFrame, env) {
     approveBtn:         m3FormFrame.locator('button:has-text("Approve"):not([disabled]):not(.k-state-disabled)'),
 
     // ── Table ─────────────────────────────────────────────────────
-    firstRowCheckbox:   m3FormFrame.locator('td[role="gridcell"] input[type="checkbox"].k-checkbox').first(),
+    rowCheckboxes: m3FormFrame.locator('td[role="gridcell"] input[type="checkbox"].k-checkbox'),
     gridCell:           m3FormFrame.locator('td[role="gridcell"]'),
 
     // ── Confirm dialog ────────────────────────────────────────────

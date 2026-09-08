@@ -113,7 +113,7 @@ class SchedulingReleasePage {
     let coFilled = false;
     let attempts = 0;
 
-    while (!coFilled && attempts < 5) {
+    while (!coFilled && attempts < 10) {
       if (attempts > 0) {
         console.log(`⚠️ CO Number option not found, clearing and retrying from Facility (${attempts}/5)...`);
 

@@ -23,7 +23,17 @@
     "master-po-reverse:headed": "npx playwright test tests/flo/master-po-reverse.spec.js --config=playwright.flo.config.js --headed",
     "trims":             "npx playwright test tests/flo/trims-inspection.spec.js --config=playwright.flo.config.js",
     "fabric":            "npx playwright test tests/flo/fabric-inspection.spec.js --config=playwright.flo.config.js",
-    "approve-po":        "node scripts/approve-po.js"
+    "approve-po":        "node scripts/approve-po.js",
+
+    "test:ui": "playwright test --ui --config=playwright.config.js",
+    "test:flo:ui": "playwright test --ui --config=playwright.flo.config.js",
+    "test:flo-reg:ui": "playwright test --ui --config=playwright.regression.config.js",
+    "test:flo": "playwright test --config=playwright.flo.config.js",
+
+    "regression":        "npx playwright test --config=playwright.regression.config.js",
+    "regression:headed": "npx playwright test --config=playwright.regression.config.js --headed",
+    "regression:debug":  "npx playwright test --config=playwright.regression.config.js --debug",
+    "regression:report": "npx playwright show-report"
   },
   "keywords": [],
   "author": "",

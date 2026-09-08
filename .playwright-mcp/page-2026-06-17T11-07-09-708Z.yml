@@ -1,0 +1,200 @@
+- generic [ref=e2]:
+  - heading "Create RM Request - Sewing Trims" [level=4] [ref=e14]
+  - generic [ref=e16]:
+    - generic [ref=e17]:
+      - generic [ref=e18]:
+        - strong [ref=e20]: "Department:"
+        - text: SEWING
+      - generic [ref=e21]:
+        - strong [ref=e23]: "Workstation:"
+        - text: SHASH003-4
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - strong [ref=e27]: "Style:"
+        - text: CKF7324S41
+      - generic [ref=e28]:
+        - strong [ref=e30]: "Customer Order:"
+        - text: "0010013465"
+      - generic [ref=e31]:
+        - strong [ref=e33]: "Schedule:"
+        - text: "35266"
+      - generic [ref=e34]:
+        - strong [ref=e36]: "Colour:"
+        - text: 110 100 CLASSICWHITE
+      - generic [ref=e37]:
+        - strong [ref=e39]: "Sewing Job Number:"
+        - text: MSEW-J:71445-000
+    - table [ref=e165]:
+      - rowgroup [ref=e170]:
+        - row "Schedule Colour S" [ref=e171]:
+          - columnheader "Schedule" [ref=e172]:
+            - generic [ref=e174]: Schedule
+          - columnheader "Colour" [ref=e175]:
+            - generic [ref=e177]: Colour
+          - columnheader "S" [ref=e178]:
+            - generic [ref=e180]: S
+      - rowgroup [ref=e181]:
+        - row "35266 110 100 CLASSICWHITE 10" [ref=e182]:
+          - cell "35266" [ref=e183]
+          - cell "110 100 CLASSICWHITE" [ref=e184]
+          - cell "10" [ref=e185]:
+            - paragraph [ref=e186]: "10"
+    - generic [ref=e42]:
+      - generic [ref=e80]:
+        - generic [ref=e83]:
+          - table [ref=e85]:
+            - rowgroup [ref=e99]:
+              - row "Procurement Group Item Code Item Name Item Description RM Colour RM Size Requirement with Wastage Requirement without Wastage Balance To Request Availability Requesting Quantity" [ref=e100]:
+                - columnheader [ref=e101]:
+                  - checkbox [checked] [ref=e108] [cursor=pointer]
+                - columnheader "Procurement Group" [ref=e110]:
+                  - generic [ref=e112]: Procurement Group
+                - columnheader "Item Code" [ref=e113]:
+                  - generic [ref=e115]: Item Code
+                - columnheader "Item Name" [ref=e116]:
+                  - generic [ref=e118]: Item Name
+                - columnheader "Item Description" [ref=e119]:
+                  - generic [ref=e121]: Item Description
+                - columnheader "RM Colour" [ref=e122]:
+                  - generic [ref=e124]: RM Colour
+                - columnheader "RM Size" [ref=e125]:
+                  - generic [ref=e127]: RM Size
+                - columnheader "Requirement with Wastage" [ref=e128]:
+                  - generic [ref=e130]: Requirement with Wastage
+                - columnheader "Requirement without Wastage" [ref=e131]:
+                  - generic [ref=e133]: Requirement without Wastage
+                - columnheader "Balance To Request" [ref=e134]:
+                  - generic [ref=e136]: Balance To Request
+                - columnheader "Availability" [ref=e137]:
+                  - generic [ref=e139]: Availability
+                - columnheader "Requesting Quantity" [ref=e140]:
+                  - generic [ref=e142]: Requesting Quantity
+          - table [ref=e188]:
+            - rowgroup [ref=e202]:
+              - row "ADH SADH00006 00001 ADHESIVE.TAPE_W6xMM View Description CLEAR 21.75 21.32 652.56 652.56 Increase Value Decrease Value 21.32" [ref=e203]:
+                - cell [ref=e204]:
+                  - checkbox [checked] [ref=e208] [cursor=pointer]
+                - cell "ADH" [ref=e210]
+                - cell "SADH00006 00001" [ref=e211]
+                - cell "ADHESIVE.TAPE_W6xMM" [ref=e212]
+                - cell "View Description" [ref=e213]
+                - cell "CLEAR" [ref=e214]
+                - cell [ref=e215]
+                - cell "21.75" [ref=e216]
+                - cell "21.32" [ref=e217]
+                - cell "652.56" [ref=e218]
+                - cell "652.56" [ref=e219]
+                - cell "Increase Value Decrease Value 21.32" [ref=e220]:
+                  - generic [ref=e223]:
+                    - generic [ref=e224]:
+                      - button "Increase Value" [ref=e225] [cursor=pointer]:
+                        - 'generic "icon: up" [ref=e226]':
+                          - img [ref=e227]
+                      - button "Decrease Value" [ref=e229] [cursor=pointer]:
+                        - 'generic "icon: down" [ref=e230]':
+                          - img [ref=e231]
+                    - spinbutton [ref=e234]: "21.32"
+              - row "ELS SELS00134 00009-35266 ELS.KNT_PLN.MT_W12xMM View Description SOLID CLASSIC WHITE-9716280 9.37 9.19 281.22 281.22 Increase Value Decrease Value 9.19" [ref=e235]:
+                - cell [ref=e236]:
+                  - checkbox [checked] [ref=e240] [cursor=pointer]
+                - cell "ELS" [ref=e242]
+                - cell "SELS00134 00009-35266" [ref=e243]
+                - cell "ELS.KNT_PLN.MT_W12xMM" [ref=e244]
+                - cell "View Description" [ref=e245]
+                - cell "SOLID CLASSIC WHITE-9716280" [ref=e246]
+                - cell [ref=e247]
+                - cell "9.37" [ref=e248]
+                - cell "9.19" [ref=e249]
+                - cell "281.22" [ref=e250]
+                - cell "281.22" [ref=e251]
+                - cell "Increase Value Decrease Value 9.19" [ref=e252]:
+                  - generic [ref=e255]:
+                    - generic [ref=e256]:
+                      - button "Increase Value" [ref=e257] [cursor=pointer]:
+                        - 'generic "icon: up" [ref=e258]':
+                          - img [ref=e259]
+                      - button "Decrease Value" [ref=e261] [cursor=pointer]:
+                        - 'generic "icon: down" [ref=e262]':
+                          - img [ref=e263]
+                    - spinbutton [ref=e266]: "9.19"
+              - row "LBL SLBL00025 00006 LBL.MAIN_ST View Description WHITE S 10 10 103 0 Increase Value Decrease Value 10" [ref=e267]:
+                - cell [ref=e268]:
+                  - checkbox [checked] [ref=e272] [cursor=pointer]
+                - cell "LBL" [ref=e274]
+                - cell "SLBL00025 00006" [ref=e275]
+                - cell "LBL.MAIN_ST" [ref=e276]
+                - cell "View Description" [ref=e277]
+                - cell "WHITE" [ref=e278]
+                - cell "S" [ref=e279]
+                - cell "10" [ref=e280]
+                - cell "10" [ref=e281]
+                - cell "103" [ref=e282]
+                - cell "0" [ref=e283]
+                - cell "Increase Value Decrease Value 10" [ref=e284]:
+                  - generic [ref=e287]:
+                    - generic [ref=e288]:
+                      - button "Increase Value" [disabled] [ref=e289]:
+                        - 'generic "icon: up" [ref=e290]':
+                          - img [ref=e291]
+                      - button "Decrease Value" [ref=e293] [cursor=pointer]:
+                        - 'generic "icon: down" [ref=e294]':
+                          - img [ref=e295]
+                    - spinbutton [ref=e298]: "10"
+              - row "LBL SLBL00032 00010 LBL.CARE_ST View Description WHITE NA 10 10 309 0 Increase Value Decrease Value 10" [ref=e299]:
+                - cell [ref=e300]:
+                  - checkbox [checked] [ref=e304] [cursor=pointer]
+                - cell "LBL" [ref=e306]
+                - cell "SLBL00032 00010" [ref=e307]
+                - cell "LBL.CARE_ST" [ref=e308]
+                - cell "View Description" [ref=e309]
+                - cell "WHITE" [ref=e310]
+                - cell "NA" [ref=e311]
+                - cell "10" [ref=e312]
+                - cell "10" [ref=e313]
+                - cell "309" [ref=e314]
+                - cell "0" [ref=e315]
+                - cell "Increase Value Decrease Value 10" [ref=e316]:
+                  - generic [ref=e319]:
+                    - generic [ref=e320]:
+                      - button "Increase Value" [disabled] [ref=e321]:
+                        - 'generic "icon: up" [ref=e322]':
+                          - img [ref=e323]
+                      - button "Decrease Value" [ref=e325] [cursor=pointer]:
+                        - 'generic "icon: down" [ref=e326]':
+                          - img [ref=e327]
+                    - spinbutton [ref=e330]: "10"
+              - row "RNG SRNG00007 00001-35266 RING.REG_W8xMM_100%MTL_100%MTL View Description SILVER-SX38 10 10 306 0 Increase Value Decrease Value 10" [ref=e331]:
+                - cell [ref=e332]:
+                  - checkbox [checked] [ref=e336] [cursor=pointer]
+                - cell "RNG" [ref=e338]
+                - cell "SRNG00007 00001-35266" [ref=e339]
+                - cell "RING.REG_W8xMM_100%MTL_100%MTL" [ref=e340]
+                - cell "View Description" [ref=e341]
+                - cell "SILVER-SX38" [ref=e342]
+                - cell [ref=e343]
+                - cell "10" [ref=e344]
+                - cell "10" [ref=e345]
+                - cell "306" [ref=e346]
+                - cell "0" [ref=e347]
+                - cell "Increase Value Decrease Value 10" [ref=e348]:
+                  - generic [ref=e351]:
+                    - generic [ref=e352]:
+                      - button "Increase Value" [disabled] [ref=e353]:
+                        - 'generic "icon: up" [ref=e354]':
+                          - img [ref=e355]
+                      - button "Decrease Value" [ref=e357] [cursor=pointer]:
+                        - 'generic "icon: down" [ref=e358]':
+                          - img [ref=e359]
+                    - spinbutton [ref=e362]: "10"
+        - list [ref=e363]:
+          - listitem "Previous Page" [ref=e364]:
+            - 'generic "icon: left" [ref=e366]':
+              - img [ref=e367]
+          - listitem "1" [ref=e369] [cursor=pointer]:
+            - generic [ref=e370]: "1"
+          - listitem "Next Page" [ref=e371]:
+            - 'generic "icon: right" [ref=e373]':
+              - img [ref=e374]
+      - generic [ref=e153]:
+        - button "Clear All" [ref=e155] [cursor=pointer]
+        - button "Create" [ref=e157] [cursor=pointer]

@@ -6,5 +6,5 @@
 module.exports = {
   // ── Master PO search filters (must match an already-processed PO) ──────────
   style:    'CKF7323F4Z',
-  schedule: '28761',
+  schedule: '35234',
 };

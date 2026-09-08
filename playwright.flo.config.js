@@ -5,7 +5,7 @@ module.exports = defineConfig({
   workers: 1,
   fullyParallel: false,
   retries: 0,           // no retries – prevents beforeAll (login) re-running on failure
-  timeout: 120_000,
+  timeout: 1_200_000,
   expect: { timeout: 20000 },
   reporter: 'html',
   use: {

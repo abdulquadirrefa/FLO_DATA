@@ -66,7 +66,7 @@ class CostingApprovalPage {
 
   async fillCoFilter(coNumber) {
     let attempts = 0;
-    while (attempts < 10) {
+    while (attempts < 15) {
       await this.coFilterInput.waitFor({ state: 'visible', timeout: 15000 });
       await this.coFilterInput.click();
       await this.coFilterInput.clear();
@@ -99,11 +99,18 @@ class CostingApprovalPage {
     console.log(`✅ CO Number verified in table: ${coNumber}`);
   }
 
-  async selectFirstRowCheckbox() {
-    await this.firstRowCheckbox.waitFor({ state: 'visible', timeout: 15000 });
-    await this.firstRowCheckbox.click();
-    console.log('✅ First row checkbox selected');
+  async selectAllRowCheckboxes() {
+    await this.rowCheckboxes.first().waitFor({ state: 'visible', timeout: 15000 });
 
+    const count = await this.rowCheckboxes.count();
+    for (let i = 0; i < count; i++) {
+      const checkbox = this.rowCheckboxes.nth(i);
+      await checkbox.scrollIntoViewIfNeeded();
+      await checkbox.click({ force: true });
+      await this.page.waitForTimeout(500);
+    }
+
+    console.log(`✅ All ${count} row checkboxes selected`);
     await this.page.waitForTimeout(1000);
   }
 

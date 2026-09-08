@@ -28,7 +28,7 @@ class ConfirmGRNPage {
     console.log(`  → PO ${poNumber} entered and Next clicked`);
   }
 
-  async selectAllRowsViaHeaderCheckbox() {
+  async selectAndUpdateAllPages() {
     let pageNum = 1;
 
     while (true) {
@@ -47,7 +47,10 @@ class ConfirmGRNPage {
 
       console.log(`  ✅ Page ${pageNum} rows selected`);
 
-      // Check if there is a next page available
+      await this.updateM3Btn.click();
+      console.log(`  → Clicked Update M3 for page ${pageNum}, waiting 25 seconds...`);
+      await this.page.waitForTimeout(25000);
+
       const hasPagination = await this.pagination.isVisible();
       if (!hasPagination) break;
 
@@ -59,19 +62,13 @@ class ConfirmGRNPage {
       pageNum++;
     }
 
-    console.log(`  → All rows selected across ${pageNum} page(s)`);
-  }
-
-  async clickUpdateM3() {
-    await this.updateM3Btn.click();
-    console.log('  → Clicked Update M3, waiting 25 seconds...');
-    await this.page.waitForTimeout(25000);
+    console.log(`  → All pages processed (${pageNum} page(s))`);
   }
 
   async verifyCompletedTab() {
     let found = false;
 
-    for (let attempt = 1; attempt <= 5; attempt++) {
+    for (let attempt = 1; attempt <= 10; attempt++) {
       await this.completedTab.click();
       await this.page.waitForTimeout(2000);
 
