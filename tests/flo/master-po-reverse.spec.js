@@ -6,19 +6,9 @@
 // ═════════════════════════════════════════════════════════════════════════════
 
 const { test, expect } = require('@playwright/test');
-const { FLO_CONFIG } = require('../../config/flo/credentials');
-const data           = require('../../data/flo/masterPOReverseData');
-
-// ── Screenshot helper ─────────────────────────────────────────────────────────
-async function failStep(page, stepName, err) {
-  console.error(`\n[FAIL] ${stepName}: ${err.message}`);
-  const screenshot = await page.screenshot({ fullPage: true });
-  await test.info().attach(`FAIL – ${stepName}`, {
-    body:        screenshot,
-    contentType: 'image/png',
-  });
-  throw err;
-}
+const { FLO_CONFIG }   = require('../../config/flo/credentials');
+const data             = require('../../data/flo/masterPOReverseData');
+const { failStep }     = require('../../src/utils/failStep');
 
 // ─────────────────────────────────────────────────────────────────────────────
 test.setTimeout(300_000); // 5 min

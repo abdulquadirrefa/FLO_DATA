@@ -1,0 +1,20 @@
+{
+  "variables": {
+    "userId": "testUser1@brandix.com",
+    "queryData": {
+      "co": "",
+      "facility": "BAL",
+      "scheduleNo": 22921,
+      "style": "CKF7323F4Z",
+      "selectedBuyerDivByCO": "LPVCKNCBFMWOMEN"
+    },
+    "type": "releaseSchedule",
+    "selectedLogics": [],
+    "email": "testUser1@brandix.com",
+    "warehouses": [
+      "B53", "B2X", "B2Y", "B09", "B03", "B05", "S1X", "S00", "B2S", "S1Y", "B2W", "S50", "A2D"
+    ],
+    "company": 200
+  },
+  "query": "query ($email: String!, $userId: String!, $queryData: AddScheduleMopArgs, $type: String, $selectedLogics: [String!]!, $warehouses: [String!]!, $company: Float!) {\n  addScheduleNo(\n    selectedLogics: $selectedLogics\n    email: $email\n    userId: $userId\n    type: $type\n    queryData: $queryData\n    warehouses: $warehouses\n    company: $company\n  ) {\n    status\n    description\n    __typename\n  }\n}\n"
+}

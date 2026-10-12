@@ -1,0 +1,17 @@
+{
+    "variables": {
+        "style": "CKF7323F4Z",
+        "co": "0010055430",
+        "facility": "BAL",
+        "warehouses": [
+            "B00", "V52", "B66", "V50", "A0D", "B4W", "V02", "B05", "B11", "B14",
+            "V1S", "B10", "B60", "B64", "B61", "S1Y", "V1W", "B04", "V2S", "V01",
+            "V1X", "B15", "B62", "B2Y", "B03", "B63", "B4S", "V51", "S00", "B4Y",
+            "V2W", "B12", "V1Y", "Q1Y", "B06", "A2D", "S50", "V00", "B4X", "B17",
+            "Q1X", "B13", "Q50", "B67", "B02", "B2S", "B2X", "B53", "B2W", "B16",
+            "Q00", "S1X", "B65"
+        ],
+        "company": 200
+    },
+    "query": "query ($facility: String!, $co: String!, $style: String!, $warehouses: [String!]!, $company: Float!) {\n  getAllScheduleNumbersAddRelease(\n    style: $style\n    co: $co\n    facility: $facility\n    warehouses: $warehouses\n    company: $company\n  ) {\n    mainProduct\n    referenceOrderNumber\n    scheduleNumber\n    __typename\n  }\n}\n"
+}

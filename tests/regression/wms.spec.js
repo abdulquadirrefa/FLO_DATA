@@ -5,27 +5,17 @@
 //      stored session (see auth.setup.js / playwright.regression.config.js)
 //      already authenticates these tests — no login step needed.
 //    • Test data lives in data/regression/wms.data.json.
-//    • Follow the POM pattern: keep selectors in locators/flo/WMSLocators.js
-//      and flow steps as methods on pages/flo/WMSPage.js.
+//    • Follow the POM pattern: keep selectors in src/locators/flo/WMSLocators.js
+//      and flow steps as methods on src/pages/flo/WMSPage.js.
 //
 //  Run: npm run regression:headed
 // ═════════════════════════════════════════════════════════════════════════════
 
 const { test, expect } = require('@playwright/test');
 const { FLO_CONFIG }   = require('../../config/flo/credentials');
-const { WMSPage }      = require('../../pages/flo/WMSPage');
+const { WMSPage }      = require('../../src/pages/flo/WMSPage');
 const data             = require('../../data/regression/wms.data.json');
-
-// ── Screenshot helper – attaches to the Playwright HTML report ────────────────
-async function failStep(page, stepName, err) {
-  console.error(`\n[FAIL] ${stepName}: ${err.message}`);
-  const screenshot = await page.screenshot({ fullPage: true });
-  await test.info().attach(`FAIL – ${stepName}`, {
-    body:        screenshot,
-    contentType: 'image/png',
-  });
-  throw err;
-}
+const { failStep }     = require('../../src/utils/failStep');
 
 test.describe('WMS (Regression)', () => {
 

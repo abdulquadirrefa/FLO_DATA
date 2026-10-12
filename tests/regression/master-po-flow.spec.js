@@ -11,17 +11,7 @@
 const { test, expect } = require('@playwright/test');
 const { FLO_CONFIG }   = require('../../config/flo/credentials');
 const data             = require('../../data/regression/master-po-flow.data.json');
-
-// ── Screenshot helper – attaches to the Playwright HTML report ────────────────
-async function failStep(page, stepName, err) {
-  console.error(`\n[FAIL] ${stepName}: ${err.message}`);
-  const screenshot = await page.screenshot({ fullPage: true });
-  await test.info().attach(`FAIL – ${stepName}`, {
-    body:        screenshot,
-    contentType: 'image/png',
-  });
-  throw err;
-}
+const { failStep }     = require('../../src/utils/failStep');
 
 // ─────────────────────────────────────────────────────────────────────────────
 test.setTimeout(1_200_000);

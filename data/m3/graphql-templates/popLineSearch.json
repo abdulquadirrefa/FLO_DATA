@@ -1,0 +1,27 @@
+{
+  "variables": {
+    "company": 200,
+    "warehouses": ["B03"],
+    "buyerDevisions": ["LPVCKNCBFMWOMEN"],
+    "frCodes": [],
+    "frRanges": [],
+    "styles": ["CKF7323F4Z##B01"],
+    "itemTypes": ["B04"],
+    "suppliers": [],
+    "responsibleMerchant": [],
+    "schedule": 22925,
+    "procumentGroups": ["CTN", "HNG", "PLB", "STK", "TAG", "TGP", "TPP"],
+    "skip": 0,
+    "take": 100,
+    "viewType": "DETAIL",
+    "popReleaseStartDate": "",
+    "popReleaseEndDate": "",
+    "loadWithExcessData": false,
+    "refreshRequired": true,
+    "userName": "TESTUSER1",
+    "notificationUser": "testUser1@brandix.com",
+    "sortDirection": "",
+    "sortBy": ""
+  },
+  "query": "query ($buyerDevisions: [String!], $company: Float, $frCodes: [String!], $frRanges: [String!], $procumentGroups: [String!], $responsibleMerchant: [String!], $schedule: Float, $styles: [String!], $itemTypes: [String!], $suppliers: [String!], $warehouses: [String!], $skip: Float!, $take: Float!, $viewType: String!, $popReleaseStartDate: String!, $popReleaseEndDate: String!, $loadWithExcessData: Boolean, $refreshRequired: Boolean!, $userName: String!, $notificationUser: String!, $sortDirection: String, $sortBy: String, $cacheKey: String) {\n  getAggregateViewData(\n    company: $company\n    buyerDivisions: $buyerDevisions\n    frCodes: $frCodes\n    frRanges: $frRanges\n    procumentGroups: $procumentGroups\n    responsibleMerchant: $responsibleMerchant\n    schedule: $schedule\n    styles: $styles\n    itemTypes: $itemTypes\n    suppliers: $suppliers\n    warehouses: $warehouses\n    skip: $skip\n    take: $take\n    userName: $userName\n    notificationUser: $notificationUser\n    viewType: $viewType\n    popReleaseStartDate: $popReleaseStartDate\n    popReleaseEndDate: $popReleaseEndDate\n    loadWithExcessData: $loadWithExcessData\n    refreshRequired: $refreshRequired\n    sortDirection: $sortDirection\n    sortBy: $sortBy\n    cacheKey: $cacheKey\n  ) {\n    totalRecordCount\n    purchaseOrderAggregateView {\n      id\n      company\n      wareHouse\n      purchasingWarehouse\n      buyerDivision\n      season\n      style\n      frRange\n      customerOrder\n      frCode\n      schedule\n      procumentGroup\n      itemCode\n      itemDescription\n      size\n      color\n      zFeature\n      responsibleMerchent\n      supplier\n      supplierName\n      agreement\n      fgColor\n      referenceOrderType\n      price\n      priceQty\n      currency\n      onHandBalance\n      safetyStock\n      maximumStock\n      popQty\n      poQty\n      purchasingUOM\n      originalDemandQuantity\n      demandQuantity\n      isPendingInspectionSelected\n      isOpenPOSelected\n      isUnallocatedStocksSelected\n      openPO\n      allocation\n      rOPQty\n      totDemand\n      liabilityInventoryBasicUM\n      writeoffInventory\n      minimumPCD\n      expectedIHDate\n      exMillDate\n      popReleaseDate\n      deliveryMethod\n      stock\n      openPO\n      popHorizon\n      orderType\n      facility\n      deliveryTerm\n      paymentTerm\n      vpoNo\n      isVPOSelected\n      poUOM\n      minimumOrderQty\n      minimumColorQty\n      purchasePrice\n      discount\n      validFromDate\n      orderMultiple\n      isSlabPriceExist\n      structureType\n      stockAvailabilityOtherWh\n      openPoAvailabilityOtherWh\n      subCon\n      stockZone\n      itemType\n      basicUOM\n      operator\n      conversionFactor\n      supplierItemDescription\n      materialTick\n      yy\n      tbdProcurementGroup\n      fgSize\n      priceUom\n      agreementDateValidityStatus\n      priceValidation\n      isConcurrencyLocked\n      isProcessingLocked\n      coo\n      fid\n      masterCPO\n      retailStyle\n      dateCode\n      otherZ\n      seasonAtr\n      __typename\n    }\n    cacheKey\n    __typename\n  }\n}\n"
+}

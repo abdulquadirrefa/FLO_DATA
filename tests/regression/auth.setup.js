@@ -8,7 +8,7 @@
 const { test, expect } = require('@playwright/test');
 const path             = require('path');
 const { FLO_CONFIG }   = require('../../config/flo/credentials');
-const { FloLoginPage } = require('../../pages/flo/FloLoginPage');
+const { FloLoginPage } = require('../../src/pages/flo/FloLoginPage');
 
 const AUTH_FILE = path.join(__dirname, '../../playwright/.auth/flo.json');
 

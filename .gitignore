@@ -1,20 +1,32 @@
-
-# Playwright
+# ── Dependencies ────────────────────────────────────────────────
 node_modules/
+
+# ── Playwright output ───────────────────────────────────────────
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+# Stored sessions / captured tokens (auth.setup.js, session-setup.spec.js)
 /playwright/.auth/
-# Nested test output (e.g. flo-smoke/flo-smoke/)
+# Nested test output
 **/test-results/
 **/report/
 **/blob-report/
+
+# ── Secrets & local settings ────────────────────────────────────
+# Credentials — copy .env.example to .env
 .env
 *.local
-
-# MCP config (local tooling, not project code)
-.mcp.json
-
-# Local test-run config (changes per run/session, not shared project code)
+# Per-run M3 settings — copy config/m3/orderData.example.js to orderData.js
 config/m3/orderData.js
+
+# ── Generated run output ────────────────────────────────────────
+# Consolidated barcode files saved by the pl-split flow
+/downloads/
+# Created CO/PO records written by npm run data-api / data-api-generic
+data/m3/created-data*.xlsx
+
+# ── Local tooling ───────────────────────────────────────────────
+# MCP config and Playwright MCP snapshots/logs
+.mcp.json
+.playwright-mcp/

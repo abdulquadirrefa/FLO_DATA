@@ -1,9 +1,9 @@
 require('dotenv').config();
 const { test, expect }              = require('@playwright/test');
-const { FloLoginPage }              = require('../../pages/flo/FloLoginPage');
-const { FabricInspectionPage }      = require('../../pages/flo/FabricInspectionPage');
+const { FloLoginPage }              = require('../../src/pages/flo/FloLoginPage');
+const { FabricInspectionPage }      = require('../../src/pages/flo/FabricInspectionPage');
 const { FLO_CONFIG }                = require('../../config/flo/credentials');
-const { readFabricInvoiceNumbers }  = require('../../config/flo/readFabricInvoiceNumbers');
+const { readFabricInvoiceNumbers }  = require('../../src/utils/excelReader');
 
 const invoiceNumbers = readFabricInvoiceNumbers();
 

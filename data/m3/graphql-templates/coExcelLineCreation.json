@@ -1,0 +1,28 @@
+{
+  "operationName": "createCoLines",
+  "variables": {
+    "input": {
+      "company": 200, "orderNumber": "0010010406", "dateFormat": "YMD",
+      "division": "110", "facility": "BAL", "taskType": "LINE_ENTRY_SINGLE",
+      "itemType": "SINGLE", "userId": "TESTUSER1",
+      "lines": [{
+        "alternateUom": "PCE", "deliveryMethod": "AIR", "deliveryTerm": "FOB",
+        "destination": "AU001", "fobDate": "20251228", "lineType": "D00",
+        "ndcDate": "20251228", "packMethod": "C01", "pcdDate": "20251223",
+        "planDelDate": "20251230", "reqDelDate": "20251230", "salesPrice": 2.94,
+        "transactionReason": "D00", "vpoNo": "SFCSUAT1", "dateCode": "2025/12/28",
+        "otherz": "S-MX-FRA-SIN -P", "warehouse": "B03", "assortmentId": " ",
+        "skus": [
+          {"itemNo": "CKF7323F4Z00001", "quantity": 250, "color": "PV01GEQSYRAH001", "size": "S"},
+          {"itemNo": "CKF7323F4Z00002", "quantity": 300, "color": "PV01GEQSYRAH001", "size": "M"},
+          {"itemNo": "CKF7323F4Z00003", "quantity": 250, "color": "PV01GEQSYRAH001", "size": "L"},
+          {"itemNo": "CKF7323F4Z00004", "quantity": 150, "color": "PV01GEQSYRAH001", "size": "XL"},
+          {"itemNo": "CKF7323F4Z00005", "quantity": 550, "color": "PV01GEQSYRAH001", "size": "XS"}
+        ],
+        "elno": "1"
+      }],
+      "style": "CKF7323F4Z", "containsErrors": true, "systemMessageKey": "P2CATcgByQ0CG4g="
+    }
+  },
+  "query": "mutation createCoLines($input: CoLineCreateInput!) {\n  createCoLines(coLineCreateInput: $input) {\n    lines {\n      lineTempId\n      skus {\n        itemNumber\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"
+}

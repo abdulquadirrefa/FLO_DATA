@@ -1,0 +1,13 @@
+{
+    "operationName": "changePurchaseOrderApproveStatus",
+    "variables": {
+        "args": {
+            "company": "200",
+            "purchaseOrderNumber": "",
+            "approveStatus": "APPROVED",
+            "userId": "SHASHININ",
+            "comments": ""
+        }
+    },
+    "query": "query changePurchaseOrderApproveStatus($args: PurchaseOrderApproveArgs!) {\n  changePurchaseOrderApproveStatus(args: $args) {\n    status\n    message\n    __typename\n  }\n}\n"
+}

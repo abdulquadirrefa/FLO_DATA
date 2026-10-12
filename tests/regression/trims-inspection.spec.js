@@ -12,7 +12,7 @@
 
 const { test, expect }        = require('@playwright/test');
 const { FLO_CONFIG }          = require('../../config/flo/credentials');
-const { TrimsInspectionPage } = require('../../pages/flo/TrimsInspectionPage');
+const { TrimsInspectionPage } = require('../../src/pages/flo/TrimsInspectionPage');
 const data                    = require('../../data/regression/trims-inspection.data.json');
 
 test.describe('Trims Inspection (Regression)', () => {

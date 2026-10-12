@@ -3,26 +3,17 @@
 //
 //    • Uses the shared FLO session from auth.setup.js — no login needed here.
 //    • Test data lives in data/regression/tms.data.json.
-//    • Selectors: locators/flo/TMSLocators.js
-//    • Page steps:  pages/flo/TMSPage.js
+//    • Selectors:  src/locators/flo/TMSLocators.js
+//    • Page steps: src/pages/flo/TMSPage.js
 //
 //  Run: npm run regression:headed
 // ═════════════════════════════════════════════════════════════════════════════
 
 const { test, expect } = require('@playwright/test');
 const { FLO_CONFIG }   = require('../../config/flo/credentials');
-const { TMSPage }      = require('../../pages/flo/TMSPage');
+const { TMSPage }      = require('../../src/pages/flo/TMSPage');
 const data             = require('../../data/regression/tms.data.json');
-
-async function failStep(page, stepName, err) {
-  console.error(`\n[FAIL] ${stepName}: ${err.message}`);
-  const screenshot = await page.screenshot({ fullPage: true });
-  await test.info().attach(`FAIL – ${stepName}`, {
-    body:        screenshot,
-    contentType: 'image/png',
-  });
-  throw err;
-}
+const { failStep }     = require('../../src/utils/failStep');
 
 test.describe('TMS (Regression)', () => {
 

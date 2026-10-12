@@ -2,30 +2,19 @@
 //  Master PO Planning – Full Flow
 //  Edit data/flo/masterPOData.js to change style / schedule / quantities.
 //
-//  Run: npx playwright test tests/flo/master-po-flow.spec.js --config=playwright.flo.config.js --headed
-//  Or:  npm run smoke:headed (runs both spec files; use --grep to target this one)
+//  Run: npm run master-po:headed
 // ═════════════════════════════════════════════════════════════════════════════
 
 const { test, expect } = require('@playwright/test');
-const { FLO_CONFIG } = require('../../config/flo/credentials');
-const data           = require('../../data/flo/masterPOData');
-
-// ── Screenshot helper – attaches to the Playwright HTML report ────────────────
-async function failStep(page, stepName, err) {
-  console.error(`\n[FAIL] ${stepName}: ${err.message}`);
-  const screenshot = await page.screenshot({ fullPage: true });
-  await test.info().attach(`FAIL – ${stepName}`, {
-    body:        screenshot,
-    contentType: 'image/png',
-  });
-  throw err;
-}
+const { FLO_CONFIG }   = require('../../config/flo/credentials');
+const data             = require('../../data/flo/masterPOData');
+const { failStep }     = require('../../src/utils/failStep');
 
 // ─────────────────────────────────────────────────────────────────────────────
 test.setTimeout(300_000); // 5 min – the full flow takes time
 
 test('Master PO Planning – Full Flow', async ({ page }) => {
-    test.setTimeout(1_200_000);
+  test.setTimeout(1_200_000);
   // ══════════════════════════════════════════════════════════════════════════
   //  LOGIN
   // ══════════════════════════════════════════════════════════════════════════
@@ -203,22 +192,22 @@ test('Master PO Planning – Full Flow', async ({ page }) => {
   await test.step('Step 5 – Component Group Assignment', async () => {
     try {
       console.log('\n[Step5] Navigating to Component Group Assignment…');
-    await page.getByRole('button', { name: 'icon: right' }).click();
-await page.waitForLoadState('networkidle', { timeout: 30000 });
+      await page.getByRole('button', { name: 'icon: right' }).click();
+      await page.waitForLoadState('networkidle', { timeout: 30000 });
 
-// Wait for Ant Design spinner to clear before counting
-await page.locator('.ant-spin-spinning').waitFor({ state: 'hidden', timeout: 15000 }).catch(() => {});
+      // Wait for Ant Design spinner to clear before counting
+      await page.locator('.ant-spin-spinning').waitFor({ state: 'hidden', timeout: 15000 }).catch(() => {});
 
-// Target the component table specifically (only one with "Is Main Component" header)
-const componentTable = page.getByRole('table').filter({
-  has: page.getByRole('columnheader', { name: 'Is Main Component' })
-});
-const dataRows = componentTable.locator('tbody tr');
+      // Target the component table specifically (only one with "Is Main Component" header)
+      const componentTable = page.getByRole('table').filter({
+        has: page.getByRole('columnheader', { name: 'Is Main Component' })
+      });
+      const dataRows = componentTable.locator('tbody tr');
 
-// Wait for at least one row to render
-await dataRows.first().waitFor({ state: 'visible', timeout: 15000 });
-const rowCount = await dataRows.count();
-console.log(`[Step5] Found ${rowCount} component rows.`);
+      // Wait for at least one row to render
+      await dataRows.first().waitFor({ state: 'visible', timeout: 15000 });
+      const rowCount = await dataRows.count();
+      console.log(`[Step5] Found ${rowCount} component rows.`);
 
       if (rowCount === 4) {
         // 4-row flow: row 1 needs the Is Main Component switch toggled first
@@ -473,36 +462,36 @@ console.log(`[Step5] Found ${rowCount} component rows.`);
       console.log('\n[Step13] Generating Dockets…');
 
       async function pollUntilDeleteDocket(rmSku, rowLabel) {
-      const deadline = Date.now() + 600_000; // ← 10 minutes
-      let attempt = 0;
+        const deadline = Date.now() + 600_000; // 10 minutes
+        let attempt = 0;
 
-      while (Date.now() < deadline) {
-        attempt++;
-        console.log(`[Step13] ${rowLabel} – poll attempt #${attempt}…`);
+        while (Date.now() < deadline) {
+          attempt++;
+          console.log(`[Step13] ${rowLabel} – poll attempt #${attempt}…`);
 
-        await page.waitForTimeout(20_000); 
+          await page.waitForTimeout(20_000);
 
-        try {
-          await page.locator('.anticon-reload').click();
-          await page.waitForLoadState('networkidle', { timeout: 20_000 }); 
-        } catch {
-          console.log(`[Step13] ${rowLabel} – reload/networkidle timed out, continuing anyway…`);
+          try {
+            await page.locator('.anticon-reload').click();
+            await page.waitForLoadState('networkidle', { timeout: 20_000 });
+          } catch {
+            console.log(`[Step13] ${rowLabel} – reload/networkidle timed out, continuing anyway…`);
+          }
+
+          const row = page.getByRole('row', { name: new RegExp(rmSku) }).first();
+          const deleteBtn = row.getByRole('button', { name: /delete docket/i });
+
+          if (await deleteBtn.isVisible()) {
+            console.log(`[Step13] ✓ ${rowLabel} – "Delete Docket" confirmed.`);
+            return;
+          }
+
+          const remaining = Math.round((deadline - Date.now()) / 1000);
+          console.log(`[Step13] ${rowLabel} still processing… (${remaining}s remaining)`);
         }
 
-        const row = page.getByRole('row', { name: new RegExp(rmSku) }).first();
-        const deleteBtn = row.getByRole('button', { name: /delete docket/i });
-
-        if (await deleteBtn.isVisible()) {
-          console.log(`[Step13] ✓ ${rowLabel} – "Delete Docket" confirmed.`);
-          return;
-        }
-
-        const remaining = Math.round((deadline - Date.now()) / 1000);
-        console.log(`[Step13] ${rowLabel} still processing… (${remaining}s remaining)`);
-  }
-
-  throw new Error(`${rowLabel}: "Delete Docket" not visible after 10 minutes`);
-}
+        throw new Error(`${rowLabel}: "Delete Docket" not visible after 10 minutes`);
+      }
 
       console.log('[Step13] Waiting for both Generate Docket buttons to be ready…');
       await expect(page.getByRole('button', { name: 'Generate Docket', exact: true }))
@@ -517,15 +506,13 @@ console.log(`[Step5] Found ${rowCount} component rows.`);
       const row1 = page.getByRole('row', { name: /FWFT00023/ }).first();
       await row1.getByRole('button', { name: 'Generate Docket', exact: true }).click();
       console.log('[Step13] Row 1 clicked – polling for Delete Docket…');
-      //await pollUntilDeleteDocket('FWFT00023', 'Row 1 (FWFT00023)');
 
       console.log('[Step13] Clicking Generate Docket for row 2 (FWFT00048)…');
       const row2 = page.getByRole('row', { name: /FWFT00048/ }).first();
       await row2.getByRole('button', { name: 'Generate Docket', exact: true }).click();
       console.log('[Step13] Row 2 clicked – polling for Delete Docket…');
-      //await pollUntilDeleteDocket('FWFT00048', 'Row 2 (FWFT00048)');
 
-       console.log('[Step13] Polling both rows simultaneously…');
+      console.log('[Step13] Polling both rows simultaneously…');
       await Promise.all([
         pollUntilDeleteDocket('FWFT00023', 'Row 1 (FWFT00023)'),
         pollUntilDeleteDocket('FWFT00048', 'Row 2 (FWFT00048)'),

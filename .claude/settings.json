@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx playwright *)",
+      "Bash(node -e \"require\\('./src/pages/m3/M3NavigationPage'\\);require\\('./src/pages/m3/CustomerOrderPage'\\);require\\('./src/pages/m3/SchedulingReleasePage'\\);console.log\\('ok'\\)\")"
+    ]
+  }
+}

@@ -2,13 +2,13 @@ require('dotenv').config();
 const fs                 = require('fs');
 const path               = require('path');
 const { test }           = require('@playwright/test');
-const { RapidLoginPage } = require('../../pages/m3/RapidLoginPage');
-const { M3LoginPage }    = require('../../pages/m3/M3LoginPage');
+const { RapidLoginPage } = require('../../src/pages/m3/RapidLoginPage');
+const { M3LoginPage }    = require('../../src/pages/m3/M3LoginPage');
 const { orderData }      = require('../../config/m3/orderData');
-const { URLS }           = require('../../config/m3/urls');
+const { URLS }           = require('../../config/urls');
+const { AUTH_DIR }       = require('../../src/utils/paths');
 
-const AUTH_DIR       = path.resolve(__dirname, '../../playwright/.auth');
-const TOKENS_FILE    = path.join(AUTH_DIR, 'm3-tokens.json');
+const TOKENS_FILE = path.join(AUTH_DIR, 'm3-tokens.json');
 
 const env       = orderData.env;
 const RAPID_URL = URLS[env].RAPID;

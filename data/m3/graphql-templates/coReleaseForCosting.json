@@ -1,0 +1,5 @@
+{
+  "operationName": "setCOLineSubmitStatus",
+  "variables": { "company": 200, "orderNumber": "0010010406", "userName": "TESTUSER1", "userEmail": "testUser1@brandix.com", "m3Style": "CKF7323F4Z" },
+  "query": "mutation setCOLineSubmitStatus($orderNumber: String!, $company: Int!, $userName: String!, $userEmail: String!, $m3Style: String!) {\n  setCOLineSubmitStatus(\n    orderNumber: $orderNumber\n    company: $company\n    userName: $userName\n    userEmail: $userEmail\n    m3Style: $m3Style\n  )\n}\n"
+}

@@ -5,9 +5,9 @@
 
 const { test, expect } = require('@playwright/test');
 const { FLO_CONFIG }      = require('../../config/flo/credentials');
-const { FloLoginPage }    = require('../../pages/flo/FloLoginPage');
-const { FloSidebarPage }  = require('../../pages/flo/FloSidebarPage');
-const { PPSMasterPOPage } = require('../../pages/flo/PPSMasterPOPage');
+const { FloLoginPage }    = require('../../src/pages/flo/FloLoginPage');
+const { FloSidebarPage }  = require('../../src/pages/flo/FloSidebarPage');
+const { PPSMasterPOPage } = require('../../src/pages/flo/PPSMasterPOPage');
 
 const apiResponses = [];
 

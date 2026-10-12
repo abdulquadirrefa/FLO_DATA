@@ -1,6 +1,6 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-const { readPONumbers } = require('../config/m3/readPONumbers');
+const { readPONumbers } = require('../src/utils/excelReader');
 
 const ENDPOINT = 'https://rapid.uat.brandixlk.org/public-graphql-federation-gateway/graphql';
 

@@ -1,0 +1,20 @@
+{
+  "operationName": "createOrderHeader",
+  "variables": {
+    "input": {
+      "company": "200", "division": "110", "facility": "BAL",
+      "invoiceRecipient": "BRA01108", "type": "FOB", "subType": "BULK",
+      "orderType": "B0B", "retailStyle": "F4-QF7323", "style": "CKF7323F4Z",
+      "customer": "PVH01563", "payer": "BRA01108", "coResponsible": "TESTUSER1",
+      "orderDate": "2025-08-25", "customerOrderDate": "2025-08-25",
+      "requestedDeliveryDate": "2025-08-31", "cpo": "AUTO1", "buyName": "automation",
+      "vpoNo": "AUTO1", "customerStyle": "F4-QF7323", "prodWarehouse": "B03",
+      "season": "FL24", "currency": "USD", "deliveryMethod": "SEC",
+      "deliveryTerms": "FOB", "paymentMethod": "TT", "paymentTerms": "090",
+      "projectionCode": "N/A", "bomVersion": "001", "buyType": "Basic",
+      "firstCostMargin": "0.0000", "headerNote": "", "autoScheduling": true,
+      "saveAsDraft": null, "routing": "SL", "userEmail": "testUser1@brandix.com"
+    }
+  },
+  "query": "mutation createOrderHeader($input: CreateHeaderInput!) {\n  createCustomerOrderHeader(createHeaderInput: $input) {\n    success\n    orderHeader {\n      coNumber\n      __typename\n    }\n    __typename\n  }\n}\n"
+}

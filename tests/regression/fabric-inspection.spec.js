@@ -5,7 +5,7 @@
 //      instead of looping over an Excel sheet — regression checks the
 //      golden path, not bulk data.
 //    • Batch form-fill values (category, defect, shade group, etc.) still
-//      come from config/flo/fabricInspectionData.js — FabricInspectionPage
+//      come from data/flo/fabricInspectionData.js — FabricInspectionPage
 //      reads them internally, so only the invoice number is regression data.
 //    • Session comes from the "setup" project's stored storage state
 //      (see auth.setup.js / playwright.regression.config.js) — no login step.
@@ -15,7 +15,7 @@
 
 const { test, expect }          = require('@playwright/test');
 const { FLO_CONFIG }            = require('../../config/flo/credentials');
-const { FabricInspectionPage }  = require('../../pages/flo/FabricInspectionPage');
+const { FabricInspectionPage }  = require('../../src/pages/flo/FabricInspectionPage');
 const data                      = require('../../data/regression/fabric-inspection.data.json');
 
 test.describe('Fabric Inspection (Regression)', () => {

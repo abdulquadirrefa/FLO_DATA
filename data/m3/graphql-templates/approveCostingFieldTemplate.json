@@ -1,0 +1,10 @@
+{
+  "variables": { "updateApproveCostingInput": [ {
+      "serialNo": "", "rawDocumentId": "", "zFature": "", "approvalStatus": "1",
+      "customerOrderNumber": "", "garmentColor": "", "destination": "", "destinationCode": "",
+      "warehouse": "", "smv": 10.61, "fob": 23, "contribution": 12.788400000000003,
+      "m3Epm": 1.2053157398680494, "plmEpm": 1.2904, "lastApproveDate": null,
+      "approvedBy": "testUser1@brandix.com", "reApprovalStatus": "0", "reApprover": null, "reApprovalDate": null
+  } ] },
+  "query": "mutation ($updateApproveCostingInput: [ApprovaeCostingInputDto!]!) {\n  updateCostingApprovalHistoryEntity(\n    updateApproveCostingInput: $updateApproveCostingInput\n  )\n}\n"
+}
